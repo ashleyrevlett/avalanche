@@ -1,0 +1,111 @@
+[gd_scene load_steps=13 format=3 uid="uid://1i0se866c1tg"]
+
+[ext_resource type="Texture2D" uid="uid://dhd7xyrddhrll" path="res://assets/l0_bg_1.png" id="1_8vm77"]
+[ext_resource type="Script" path="res://scripts/character.gd" id="1_elf0q"]
+[ext_resource type="Script" path="res://scripts/spawner.gd" id="1_i8lv8"]
+[ext_resource type="Texture2D" uid="uid://dknh5lk2qcf4q" path="res://assets/wizard.png" id="1_k0tjr"]
+[ext_resource type="Texture2D" uid="uid://b0k4oy3v10kqa" path="res://assets/l1_bg_1.png" id="1_qo76c"]
+[ext_resource type="PackedScene" uid="uid://frh3am2xj152" path="res://square.tscn" id="2_7eihe"]
+[ext_resource type="Script" path="res://scripts/camera.gd" id="3_s3w6k"]
+[ext_resource type="Texture2D" uid="uid://c6abonhexpnpu" path="res://assets/templategrid_albedo.png" id="7_580kg"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_avl6t"]
+friction = 0.5
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xl8qq"]
+radius = 12.0
+height = 52.0
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_n7eoa"]
+friction = 0.4
+bounce = 0.1
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_efyso"]
+size = Vector2(6282.93, 845.132)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+offset = Vector2(2.08165e-12, -250)
+transform = Transform2D(1, 0, 0, 1, 2.08165e-12, -250)
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.05, 0.05)
+motion_mirroring = Vector2(2540, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(0, 498)
+scale = Vector2(4, 4)
+texture = ExtResource("1_8vm77")
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.15, 0.15)
+motion_mirroring = Vector2(1440, 2.08165e-12)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+position = Vector2(95, 494)
+scale = Vector2(2.05938, 2.05938)
+texture = ExtResource("1_qo76c")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(283, 329)
+zoom = Vector2(0.8, 0.8)
+script = ExtResource("3_s3w6k")
+
+[node name="CharacterNode" type="Node2D" parent="." groups=["player"]]
+position = Vector2(283, 502)
+script = ExtResource("1_elf0q")
+speed = 12000
+jump_speed = 4000
+max_x_velocity = 8000
+
+[node name="Character" type="RigidBody2D" parent="CharacterNode"]
+unique_name_in_owner = true
+position = Vector2(0, -32)
+collision_layer = 2
+mass = 15.0
+physics_material_override = SubResource("PhysicsMaterial_avl6t")
+lock_rotation = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterNode/Character"]
+position = Vector2(0, 6)
+shape = SubResource("CapsuleShape2D_xl8qq")
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterNode/Character"]
+scale = Vector2(2, 2)
+texture = ExtResource("1_k0tjr")
+hframes = 3
+vframes = 4
+
+[node name="Spawner" type="Node2D" parent="."]
+position = Vector2(581, -16)
+script = ExtResource("1_i8lv8")
+square_scene = ExtResource("2_7eihe")
+
+[node name="Marker2D" type="Marker2D" parent="Spawner"]
+position = Vector2(-173, -96)
+
+[node name="Timer" type="Timer" parent="Spawner"]
+wait_time = 0.3
+autostart = true
+
+[node name="Ground" type="StaticBody2D" parent="." groups=["ground"]]
+position = Vector2(579, 327)
+rotation = -0.122173
+physics_material_override = SubResource("PhysicsMaterial_n7eoa")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+position = Vector2(491.535, 533.454)
+shape = SubResource("RectangleShape2D_efyso")
+debug_color = Color(1, 1, 1, 0.615686)
+
+[node name="TextureRect" type="TextureRect" parent="Ground"]
+custom_minimum_size = Vector2(1000, 200)
+offset_left = -2649.41
+offset_top = 107.766
+offset_right = -1649.41
+offset_bottom = 307.766
+scale = Vector2(6.28, 4.2)
+texture = ExtResource("7_580kg")
+expand_mode = 3
+stretch_mode = 1

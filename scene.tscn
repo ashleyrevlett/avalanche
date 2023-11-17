@@ -5,8 +5,8 @@
 [ext_resource type="Script" path="res://scripts/character.gd" id="1_elf0q"]
 [ext_resource type="Texture2D" uid="uid://b0k4oy3v10kqa" path="res://assets/l1_bg_1.png" id="1_qo76c"]
 [ext_resource type="Script" path="res://scripts/camera.gd" id="3_s3w6k"]
-[ext_resource type="PackedScene" uid="uid://ckdduyp6itwn5" path="res://spawner.tscn" id="5_akxtr"]
 [ext_resource type="PackedScene" uid="uid://b8wcb1enfr6ee" path="res://ground.tscn" id="8_spv53"]
+[ext_resource type="Script" path="res://scripts/terrain.gd" id="8_tujsh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g0o5x"]
 size = Vector2(50, 50)
@@ -18,6 +18,7 @@ size = Vector2(50, 50)
 size = Vector2(57.3876, 54)
 
 [node name="Game" type="Node2D"]
+position = Vector2(0, -2)
 script = ExtResource("1_8h2uv")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
@@ -45,12 +46,11 @@ texture = ExtResource("1_qo76c")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(301, 347)
 script = ExtResource("3_s3w6k")
 
 [node name="Character" type="CharacterBody2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(-24, 496)
+position = Vector2(-241, 125)
 scale = Vector2(0.993246, 1)
 collision_layer = 2
 floor_stop_on_slope = false
@@ -80,86 +80,10 @@ debug_color = Color(0.513726, 0.772549, 0.478431, 0.419608)
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="Character"]
 unique_name_in_owner = true
 
-[node name="Spawner" parent="." instance=ExtResource("5_akxtr")]
-position = Vector2(1010, 151)
-duration = 4.0
-emit_speed = 0.8
-
-[node name="Spawner2" parent="." instance=ExtResource("5_akxtr")]
-position = Vector2(1680, 173)
-delay_time = 3.0
-duration = 1.0
-emit_speed = 0.6
-
-[node name="Spawner4" parent="." instance=ExtResource("5_akxtr")]
-position = Vector2(1025, 32)
-delay_time = 4.0
-duration = 1.0
-
-[node name="Spawner3" parent="." instance=ExtResource("5_akxtr")]
-position = Vector2(1351, 155)
-delay_time = 3.0
-duration = 2.0
-emit_speed = 0.2
-
-[node name="Spawner6" parent="." instance=ExtResource("5_akxtr")]
-position = Vector2(2095, -132)
-delay_time = 4.0
-emit_speed = 1.0
-
-[node name="Spawner7" parent="." instance=ExtResource("5_akxtr")]
-position = Vector2(1856, -22)
-delay_time = 3.0
-duration = 1.0
-emit_speed = 0.6
-
-[node name="Spawner8" parent="." instance=ExtResource("5_akxtr")]
-position = Vector2(1653, -70)
-delay_time = 4.0
-duration = 1.0
-
-[node name="Spawner10" parent="." instance=ExtResource("5_akxtr")]
-position = Vector2(2290, -2)
-delay_time = 6.0
-duration = 2.0
-emit_speed = 0.2
-
-[node name="Spawner11" parent="." instance=ExtResource("5_akxtr")]
-position = Vector2(3034, -289)
-delay_time = 7.0
-emit_speed = 1.0
-
-[node name="Spawner12" parent="." instance=ExtResource("5_akxtr")]
-position = Vector2(2795, -179)
-delay_time = 8.0
-duration = 1.0
-emit_speed = 0.6
-
-[node name="Spawner13" parent="." instance=ExtResource("5_akxtr")]
-position = Vector2(2592, -227)
-delay_time = 10.0
-duration = 1.0
-
-[node name="Spawner14" parent="." instance=ExtResource("5_akxtr")]
-position = Vector2(2918, -104)
-delay_time = 13.0
-duration = 2.0
-emit_speed = 0.2
-
-[node name="Spawner15" parent="." instance=ExtResource("5_akxtr")]
-position = Vector2(2380, -489)
-delay_time = 0.3
-duration = 2.0
-emit_speed = 0.2
-
-[node name="Ground" parent="." instance=ExtResource("8_spv53")]
-position = Vector2(298, 526)
-
-[node name="Ground2" parent="." instance=ExtResource("8_spv53")]
-position = Vector2(2260, 179)
-
-[node name="Ground3" parent="." instance=ExtResource("8_spv53")]
-position = Vector2(4341, -194)
+[node name="Terrain" type="Node2D" parent="."]
+position = Vector2(0, -33)
+script = ExtResource("8_tujsh")
+ground_scene = ExtResource("8_spv53")
 
 [node name="GameOverUI" type="CanvasLayer" parent="."]
 unique_name_in_owner = true

@@ -52,7 +52,7 @@ func _physics_process(delta):
 	# detect player death
 	if not is_onscreen:
 		time_elapsed_offscreen += delta
-		print("time_elapsed_offscreen", time_elapsed_offscreen)
+		# print("time_elapsed_offscreen", time_elapsed_offscreen)
 		
 	if time_elapsed_offscreen >= time_offscreen_til_death:
 		player_death.emit()

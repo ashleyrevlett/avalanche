@@ -10,7 +10,7 @@ var objects = []
 
 func _ready():
 	camera_size = get_viewport_rect().size # * camera.zoom
-	for x in range(1, 4):
+	for x in range(1, 8):
 		_spawn()	
 
 

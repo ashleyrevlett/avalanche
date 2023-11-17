@@ -15,7 +15,7 @@ var camera_size: Vector2
 func _ready():
 	camera_size = get_viewport_rect().size # * camera.zoom
 	rotation_degrees = angle
-	for x in range(1, 4):
+	for x in range(1, 8):
 		_spawn_ground()	
 
 
@@ -36,11 +36,18 @@ func _spawn_ground():
 func _process(delta):
 	# when the first ground goes offscreen, remove it and add a new one
 	# get global pos of instance, compare to camera rect
+	var camera_rect = Rect2(camera.get_screen_center_position() - camera_size / 2, camera_size)
+	
 	if (ground_objects.size() > 0):
 		var first_pos = ground_objects[0].global_position
-		var camera_rect = Rect2(camera.get_screen_center_position() - camera_size / 2, camera_size)
-		if (first_pos.x + ground_width/2 < camera_rect.position.x - ground_width/2):
+		if (first_pos.x + ground_width/2 < camera_rect.position.x - ground_width*2):
 			var instance = ground_objects.pop_front()
 			instance.queue_free()
 			_spawn_ground()
 	
+		var last_pos = ground_objects[-1].global_position
+		var angle_modifier = deg_to_rad(floor(last_pos.y / 10000))
+		var new_rad = deg_to_rad(angle) + angle_modifier
+		var new_rot = lerp_angle(rotation, new_rad, 2.5 * delta)
+		print("angle_modifier:", angle_modifier, new_rot)
+		rotation = new_rot

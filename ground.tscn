@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8wcb1enfr6ee"]
+
+[ext_resource type="Texture2D" uid="uid://c6abonhexpnpu" path="res://assets/templategrid_albedo.png" id="1_aq5hp"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_n7eoa"]
+friction = 0.1
+bounce = 0.3
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_efyso"]
+size = Vector2(6282.93, 845.132)
+
+[node name="Ground" type="StaticBody2D" groups=["ground"]]
+position = Vector2(298, 492)
+rotation = -0.174533
+scale = Vector2(0.316595, 0.438019)
+physics_material_override = SubResource("PhysicsMaterial_n7eoa")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(491.535, 533.454)
+shape = SubResource("RectangleShape2D_efyso")
+debug_color = Color(1, 1, 1, 0.615686)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(1000, 200)
+offset_left = -2649.41
+offset_top = 107.766
+offset_right = -1649.41
+offset_bottom = 307.766
+scale = Vector2(6.27185, 4.19727)
+texture = ExtResource("1_aq5hp")
+expand_mode = 1
+stretch_mode = 1

@@ -1,31 +1,27 @@
-[gd_scene load_steps=13 format=3 uid="uid://1i0se866c1tg"]
+[gd_scene load_steps=11 format=3 uid="uid://1i0se866c1tg"]
 
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_8h2uv"]
 [ext_resource type="Texture2D" uid="uid://dhd7xyrddhrll" path="res://assets/l0_bg_1.png" id="1_8vm77"]
 [ext_resource type="Script" path="res://scripts/character.gd" id="1_elf0q"]
-[ext_resource type="Script" path="res://scripts/spawner.gd" id="1_i8lv8"]
-[ext_resource type="Texture2D" uid="uid://dknh5lk2qcf4q" path="res://assets/wizard.png" id="1_k0tjr"]
 [ext_resource type="Texture2D" uid="uid://b0k4oy3v10kqa" path="res://assets/l1_bg_1.png" id="1_qo76c"]
-[ext_resource type="PackedScene" uid="uid://frh3am2xj152" path="res://square.tscn" id="2_7eihe"]
 [ext_resource type="Script" path="res://scripts/camera.gd" id="3_s3w6k"]
-[ext_resource type="Texture2D" uid="uid://c6abonhexpnpu" path="res://assets/templategrid_albedo.png" id="7_580kg"]
+[ext_resource type="PackedScene" uid="uid://ckdduyp6itwn5" path="res://spawner.tscn" id="5_akxtr"]
+[ext_resource type="PackedScene" uid="uid://b8wcb1enfr6ee" path="res://ground.tscn" id="8_spv53"]
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_avl6t"]
-friction = 0.5
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g0o5x"]
+size = Vector2(50, 50)
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xl8qq"]
-radius = 12.0
-height = 52.0
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_770fh"]
+size = Vector2(50, 50)
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_n7eoa"]
-friction = 0.4
-bounce = 0.1
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1esqg"]
+size = Vector2(57.3876, 54)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_efyso"]
-size = Vector2(6282.93, 845.132)
-
-[node name="Node2D" type="Node2D"]
+[node name="Game" type="Node2D"]
+script = ExtResource("1_8h2uv")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+visible = false
 offset = Vector2(2.08165e-12, -250)
 transform = Transform2D(1, 0, 0, 1, 2.08165e-12, -250)
 
@@ -48,64 +44,152 @@ scale = Vector2(2.05938, 2.05938)
 texture = ExtResource("1_qo76c")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(283, 329)
-zoom = Vector2(0.8, 0.8)
+unique_name_in_owner = true
+position = Vector2(301, 347)
 script = ExtResource("3_s3w6k")
 
-[node name="CharacterNode" type="Node2D" parent="." groups=["player"]]
-position = Vector2(283, 502)
-script = ExtResource("1_elf0q")
-speed = 12000
-jump_speed = 4000
-max_x_velocity = 8000
-
-[node name="Character" type="RigidBody2D" parent="CharacterNode"]
+[node name="Character" type="CharacterBody2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(0, -32)
+position = Vector2(-24, 496)
+scale = Vector2(0.993246, 1)
 collision_layer = 2
-mass = 15.0
-physics_material_override = SubResource("PhysicsMaterial_avl6t")
-lock_rotation = true
+floor_stop_on_slope = false
+script = ExtResource("1_elf0q")
+speed = 700
+jump_speed = -1500
+acceleration = 0.35
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterNode/Character"]
-position = Vector2(0, 6)
-shape = SubResource("CapsuleShape2D_xl8qq")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Character"]
+unique_name_in_owner = true
+position = Vector2(2.08165e-12, 2.08165e-12)
+shape = SubResource("RectangleShape2D_g0o5x")
 
-[node name="Sprite2D" type="Sprite2D" parent="CharacterNode/Character"]
-scale = Vector2(2, 2)
-texture = ExtResource("1_k0tjr")
+[node name="Sprite2D" type="Sprite2D" parent="Character"]
+scale = Vector2(-2.92466, 4)
+texture = SubResource("PlaceholderTexture2D_770fh")
 hframes = 3
 vframes = 4
 
-[node name="Spawner" type="Node2D" parent="."]
-position = Vector2(581, -16)
-script = ExtResource("1_i8lv8")
-square_scene = ExtResource("2_7eihe")
+[node name="GroundDetector" type="Area2D" parent="Character"]
 
-[node name="Marker2D" type="Marker2D" parent="Spawner"]
-position = Vector2(-173, -96)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Character/GroundDetector"]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_1esqg")
+debug_color = Color(0.513726, 0.772549, 0.478431, 0.419608)
 
-[node name="Timer" type="Timer" parent="Spawner"]
-wait_time = 0.3
-autostart = true
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="Character"]
+unique_name_in_owner = true
 
-[node name="Ground" type="StaticBody2D" parent="." groups=["ground"]]
-position = Vector2(579, 327)
-rotation = -0.122173
-physics_material_override = SubResource("PhysicsMaterial_n7eoa")
+[node name="Spawner" parent="." instance=ExtResource("5_akxtr")]
+position = Vector2(1010, 151)
+duration = 4.0
+emit_speed = 0.8
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
-position = Vector2(491.535, 533.454)
-shape = SubResource("RectangleShape2D_efyso")
-debug_color = Color(1, 1, 1, 0.615686)
+[node name="Spawner2" parent="." instance=ExtResource("5_akxtr")]
+position = Vector2(1680, 173)
+delay_time = 3.0
+duration = 1.0
+emit_speed = 0.6
 
-[node name="TextureRect" type="TextureRect" parent="Ground"]
-custom_minimum_size = Vector2(1000, 200)
-offset_left = -2649.41
-offset_top = 107.766
-offset_right = -1649.41
-offset_bottom = 307.766
-scale = Vector2(6.28, 4.2)
-texture = ExtResource("7_580kg")
-expand_mode = 3
-stretch_mode = 1
+[node name="Spawner4" parent="." instance=ExtResource("5_akxtr")]
+position = Vector2(1025, 32)
+delay_time = 4.0
+duration = 1.0
+
+[node name="Spawner3" parent="." instance=ExtResource("5_akxtr")]
+position = Vector2(1351, 155)
+delay_time = 3.0
+duration = 2.0
+emit_speed = 0.2
+
+[node name="Spawner6" parent="." instance=ExtResource("5_akxtr")]
+position = Vector2(2095, -132)
+delay_time = 4.0
+emit_speed = 1.0
+
+[node name="Spawner7" parent="." instance=ExtResource("5_akxtr")]
+position = Vector2(1856, -22)
+delay_time = 3.0
+duration = 1.0
+emit_speed = 0.6
+
+[node name="Spawner8" parent="." instance=ExtResource("5_akxtr")]
+position = Vector2(1653, -70)
+delay_time = 4.0
+duration = 1.0
+
+[node name="Spawner10" parent="." instance=ExtResource("5_akxtr")]
+position = Vector2(2290, -2)
+delay_time = 6.0
+duration = 2.0
+emit_speed = 0.2
+
+[node name="Spawner11" parent="." instance=ExtResource("5_akxtr")]
+position = Vector2(3034, -289)
+delay_time = 7.0
+emit_speed = 1.0
+
+[node name="Spawner12" parent="." instance=ExtResource("5_akxtr")]
+position = Vector2(2795, -179)
+delay_time = 8.0
+duration = 1.0
+emit_speed = 0.6
+
+[node name="Spawner13" parent="." instance=ExtResource("5_akxtr")]
+position = Vector2(2592, -227)
+delay_time = 10.0
+duration = 1.0
+
+[node name="Spawner14" parent="." instance=ExtResource("5_akxtr")]
+position = Vector2(2918, -104)
+delay_time = 13.0
+duration = 2.0
+emit_speed = 0.2
+
+[node name="Spawner15" parent="." instance=ExtResource("5_akxtr")]
+position = Vector2(2380, -489)
+delay_time = 0.3
+duration = 2.0
+emit_speed = 0.2
+
+[node name="Ground" parent="." instance=ExtResource("8_spv53")]
+position = Vector2(298, 526)
+
+[node name="Ground2" parent="." instance=ExtResource("8_spv53")]
+position = Vector2(2260, 179)
+
+[node name="Ground3" parent="." instance=ExtResource("8_spv53")]
+position = Vector2(4341, -194)
+
+[node name="GameOverUI" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOverUI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -163.5
+offset_top = -60.5
+offset_right = 163.5
+offset_bottom = 60.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="GameOverUI/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "Game Over"
+horizontal_alignment = 1
+
+[node name="RestartButton" type="Button" parent="GameOverUI/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Restart"
+
+[connection signal="body_entered" from="Character/GroundDetector" to="Character" method="_on_ground_detector_body_entered"]
+[connection signal="screen_entered" from="Character/VisibleOnScreenNotifier2D" to="Character" method="_on_screen_entered"]
+[connection signal="screen_exited" from="Character/VisibleOnScreenNotifier2D" to="Character" method="_on_screen_exited"]

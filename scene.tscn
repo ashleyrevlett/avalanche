@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://1i0se866c1tg"]
+[gd_scene load_steps=16 format=3 uid="uid://1i0se866c1tg"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_8h2uv"]
 [ext_resource type="Texture2D" uid="uid://dhd7xyrddhrll" path="res://assets/l0_bg_1.png" id="1_8vm77"]
@@ -15,8 +15,49 @@ size = Vector2(50, 50)
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_770fh"]
 size = Vector2(50, 50)
 
+[sub_resource type="Animation" id="Animation_u01bd"]
+resource_name = "dying"
+length = 0.3
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_sq7yu"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3beka"]
+_data = {
+"RESET": SubResource("Animation_sq7yu"),
+"dying": SubResource("Animation_u01bd")
+}
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1esqg"]
 size = Vector2(57.3876, 54)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vua0g"]
+size = Vector2(36.2448, 4)
 
 [node name="Game" type="Node2D"]
 position = Vector2(0, -2)
@@ -83,6 +124,12 @@ texture = SubResource("PlaceholderTexture2D_770fh")
 hframes = 3
 vframes = 4
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Character/Sprite2D"]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_3beka")
+}
+
 [node name="GroundDetector" type="Area2D" parent="Character"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Character/GroundDetector"]
@@ -95,6 +142,13 @@ unique_name_in_owner = true
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Character"]
 remote_path = NodePath("../../Camera2D")
+
+[node name="HeadDetector" type="Area2D" parent="Character"]
+unique_name_in_owner = true
+position = Vector2(0, -25)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Character/HeadDetector"]
+shape = SubResource("RectangleShape2D_vua0g")
 
 [node name="Terrain" type="Node2D" parent="."]
 position = Vector2(0, -33)
@@ -150,5 +204,8 @@ theme_override_font_sizes/font_size = 32
 text = "Altitude: 0"
 
 [connection signal="body_entered" from="Character/GroundDetector" to="Character" method="_on_ground_detector_body_entered"]
+[connection signal="body_exited" from="Character/GroundDetector" to="Character" method="_on_ground_detector_body_exited"]
 [connection signal="screen_entered" from="Character/VisibleOnScreenNotifier2D" to="Character" method="_on_screen_entered"]
 [connection signal="screen_exited" from="Character/VisibleOnScreenNotifier2D" to="Character" method="_on_screen_exited"]
+[connection signal="body_entered" from="Character/HeadDetector" to="Character" method="_on_head_detector_body_entered"]
+[connection signal="body_exited" from="Character/HeadDetector" to="Character" method="_on_head_detector_body_exited"]

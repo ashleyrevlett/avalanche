@@ -13,10 +13,15 @@ signal player_death
 @onready var camera_rect: Rect2
 @onready var player_width: float
 
+var on_ground = true
 var jumps_since_ground = 0
 var time_elapsed_offscreen = 0
 var is_onscreen = true
-var time_offscreen_til_death = 2 # sec
+var time_offscreen_til_death = 1 # sec
+
+var bodies_on_head = []
+var time_elapsed_crushed = 0
+var time_crushed_til_death = .5 # sec
 
 func _ready():
 	player_width = %CollisionShape2D.shape.get_rect().size.x
@@ -49,17 +54,33 @@ func _physics_process(delta):
 	
 	_clamp_position()
 	
-	# detect player death
+	# detect player death by off camera position
 	if not is_onscreen:
 		time_elapsed_offscreen += delta
 		# print("time_elapsed_offscreen", time_elapsed_offscreen)
 		
 	if time_elapsed_offscreen >= time_offscreen_til_death:
 		player_death.emit()
-		
+	
+	# detect player death by crushing
+	if (bodies_on_head.size() > 0 and on_ground):
+		time_elapsed_crushed += delta
+		%AnimationPlayer.play("dying")
+	else: 
+		time_elapsed_crushed = 0
+		%AnimationPlayer.play("RESET")
+	
+	if time_elapsed_crushed > time_crushed_til_death:
+		player_death.emit()
+	
 
 func _on_ground_detector_body_entered(body):
+	on_ground = true
 	jumps_since_ground = 0
+
+
+func _on_ground_detector_body_exited(body):
+	on_ground = false
 
 
 func _on_screen_exited():
@@ -71,3 +92,13 @@ func _on_screen_entered():
 	is_onscreen = true
 	time_elapsed_offscreen = 0
 	print("_on_screen_entered, is_onscreen:", is_onscreen)
+
+
+func _on_head_detector_body_entered(body):
+	bodies_on_head.append(body)
+
+
+func _on_head_detector_body_exited(body):
+	bodies_on_head.erase(body)
+	
+

@@ -17,7 +17,7 @@ func _ready():
 
 func _on_game_over():
 	print("Game over!")
-	%GameOverLabel.text = "Game Over!\n Final Altitude: %s" % floor(altitude)
+	%GameOverLabel.text = "Game Over!\n Final Altitude: %sm" % floor(altitude)
 	%GameOverUI.show()
 	get_tree().paused = true
 	

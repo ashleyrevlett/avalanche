@@ -49,5 +49,4 @@ func _process(delta):
 		var angle_modifier = deg_to_rad(floor(last_pos.y / 10000))
 		var new_rad = deg_to_rad(angle) + angle_modifier
 		var new_rot = lerp_angle(rotation, new_rad, 2.5 * delta)
-		print("angle_modifier:", angle_modifier, new_rot)
 		rotation = new_rot

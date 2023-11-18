@@ -18,7 +18,7 @@ func _ready():
 	player = %Character
 
 
-func _physics_process(delta):
+func _process(delta):
 	camera_rect = Rect2(get_screen_center_position() - camera_size / 2, camera_size)
 
 	# get y position of ground under player,

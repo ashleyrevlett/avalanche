@@ -11,6 +11,8 @@ bounce = 0.3
 size = Vector2(1000, 600)
 
 [node name="Ground" type="StaticBody2D" groups=["ground"]]
+collision_layer = 4
+collision_mask = 3
 physics_material_override = SubResource("PhysicsMaterial_n7eoa")
 script = ExtResource("1_05p53")
 height = 600.0

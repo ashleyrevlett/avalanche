@@ -20,7 +20,7 @@ var time_offscreen_til_death = 1 # sec
 
 var bodies_on_head = []
 var time_elapsed_crushed = 0
-var time_crushed_til_death = .2 # sec
+var time_crushed_til_death = .3 # sec
 
 func _ready():
 	player_width = %CollisionShape2D.shape.get_rect().size.x
@@ -58,10 +58,12 @@ func _physics_process(delta):
 		# print("time_elapsed_offscreen", time_elapsed_offscreen)
 		
 	if time_elapsed_offscreen >= time_offscreen_til_death:
+		print("death by offscreen")
 		player_death.emit()
 	
 	# detect player death by crushing
 	if (bodies_on_head.size() > 0 and on_ground):
+		print("death by crushing")
 		time_elapsed_crushed += delta
 		%AnimationPlayer.play("dying")
 	else: 

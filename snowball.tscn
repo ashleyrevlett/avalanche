@@ -8,7 +8,8 @@ resource_local_to_scene = true
 radius = 50.0
 
 [node name="Snowball" type="RigidBody2D" groups=["snowball"]]
-collision_mask = 3
+collision_layer = 2
+collision_mask = 7
 mass = 0.1
 script = ExtResource("1_5ar2i")
 grow_velocity = 30

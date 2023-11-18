@@ -94,6 +94,9 @@ func _on_screen_entered():
 
 func _on_head_detector_body_entered(body):
 	bodies_on_head.append(body)
+	# die on supersize touch to head
+	if ("supersize" in body.get_groups()):
+		player_death.emit()
 
 
 func _on_head_detector_body_exited(body):

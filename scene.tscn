@@ -64,25 +64,37 @@ position = Vector2(0, -2)
 script = ExtResource("1_8h2uv")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
-visible = false
-offset = Vector2(2.08165e-12, -250)
-transform = Transform2D(1, 0, 0, 1, 2.08165e-12, -250)
+layer = -1
+follow_viewport_enabled = true
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_scale = Vector2(0.05, 0.05)
-motion_mirroring = Vector2(2540, 0)
+motion_scale = Vector2(0.1, 0.1)
+motion_mirroring = Vector2(3820, 30)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-position = Vector2(0, 498)
-scale = Vector2(4, 4)
+scale = Vector2(6, 6)
 texture = ExtResource("1_8vm77")
+offset = Vector2(2.08165e-12, 2.08165e-12)
+
+[node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(0, -4266)
+scale = Vector2(6, 6)
+texture = ExtResource("1_8vm77")
+offset = Vector2(2.08165e-12, 2.08165e-12)
+
+[node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(0, -2190)
+scale = Vector2(6, 6)
+texture = ExtResource("1_8vm77")
+offset = Vector2(2.08165e-12, 2.08165e-12)
+flip_v = true
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2(0.15, 0.15)
 motion_mirroring = Vector2(1440, 2.08165e-12)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
-position = Vector2(95, 494)
+position = Vector2(95, 694)
 scale = Vector2(2.05938, 2.05938)
 texture = ExtResource("1_qo76c")
 

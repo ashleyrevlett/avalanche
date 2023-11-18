@@ -13,8 +13,8 @@ var can_emit = false
 func _ready():
 	camera = get_tree().get_first_node_in_group("camera")
 
-	duration = randi_range(.3, .9)
-	emit_speed = randi_range(.3, .9)
+	duration = randi_range(.2, .5)
+	emit_speed = randi_range(.3, 1)
 	
 	$EmitTimer.wait_time = emit_speed
 	$EmitTimer.timeout.connect(_spawn)

@@ -21,16 +21,17 @@ func _ready():
 
 func _spawn_spawner():
 	var instance = spawner_scene.instantiate()
+	var y_pos = 360 + ground_height / 2 * -1
 	if (spawner_objects.size() == 0):
-		instance.position = Vector2(camera.camera_size.x/2, 0)
+		instance.position = Vector2(camera.camera_size.x/2, y_pos)
 	else:
 		var random_x = randi_range(camera.camera_size.x * .6, camera.camera_size.x * 1.2)
-		var random_y = randi_range(0, camera.camera_size.y/3)
-		var new_pos = spawner_objects[-1].position + Vector2(random_x, random_y * -1)
-		print("spawned at ", Vector2(random_x, random_y), new_pos)
+		#var random_y = randi_range(0, camera.camera_size.y/5)
+		var new_pos = Vector2(spawner_objects[-1].position.x + random_x, y_pos)
 		instance.position = new_pos
 	add_child(instance)
 	spawner_objects.append(instance)
+	print("spawned at ", instance.position)
 	
 
 func _spawn_ground():
@@ -59,10 +60,11 @@ func _process(delta):
 			_spawn_ground()
 	
 		var last_pos = ground_objects[-1].global_position
-		var angle_modifier = deg_to_rad(floor(last_pos.y / 10000))
+		var angle_modifier = deg_to_rad(floor(last_pos.y / 600))
 		var new_rad = deg_to_rad(angle) + angle_modifier
-		var new_rot = lerp_angle(rotation, new_rad, 2.5 * delta)
+		var new_rot = lerp_angle(rotation, new_rad, 2 * delta)
 		rotation = new_rot
+		print("rotation:", rotation)
 
 	if (spawner_objects.size() > 0):
 		var first_pos = spawner_objects[0].global_position

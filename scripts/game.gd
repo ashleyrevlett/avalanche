@@ -29,3 +29,4 @@ func _restart_game():
 func _process(delta):
 	altitude = max(0, camera.position.y / 20 * -1)
 	score_label.text = "Altitude: %sm" % floor(altitude)
+	$ScoreUI/PlayerPos.text = "%s, %s" % [int(%Character.global_position.x), int(%Character.global_position.y)]

@@ -10,8 +10,6 @@ signal player_death
 @export var max_velocity = 2000
 
 @onready var camera: Camera2D = %Camera2D
-@onready var camera_size: Vector2
-@onready var camera_rect: Rect2
 @onready var player_width: float
 
 var on_ground = true
@@ -22,18 +20,15 @@ var time_offscreen_til_death = 1 # sec
 
 var bodies_on_head = []
 var time_elapsed_crushed = 0
-var time_crushed_til_death = .5 # sec
+var time_crushed_til_death = .2 # sec
 
 func _ready():
 	player_width = %CollisionShape2D.shape.get_rect().size.x
-	camera_size = get_viewport_rect().size # * camera.zoom
-	camera_rect = Rect2(camera.get_screen_center_position() - camera_size / 2, camera_size)
 
 
 func _clamp_position():
-	camera_rect = Rect2(camera.get_screen_center_position() - camera_size / 2, camera_size)
-	global_position.x = max(camera_rect.position.x + player_width/2, global_position.x)
-	global_position.x = min(camera_rect.end.x - player_width/2, global_position.x)
+	global_position.x = max(camera.camera_rect.position.x + player_width/2, global_position.x)
+	global_position.x = min(camera.camera_rect.end.x - player_width/2, global_position.x)
 
 
 func _physics_process(delta):
@@ -51,7 +46,7 @@ func _physics_process(delta):
 		velocity.y = jump_speed
 
 	velocity.y = clamp(velocity.y, -max_velocity, max_velocity)
-	print(velocity)
+	#print(velocity)
 
 	move_and_slide()
 	

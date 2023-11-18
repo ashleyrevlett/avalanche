@@ -4,10 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://dhd7xyrddhrll" path="res://assets/l0_bg_1.png" id="1_8vm77"]
 [ext_resource type="Script" path="res://scripts/character.gd" id="1_elf0q"]
 [ext_resource type="Texture2D" uid="uid://b0k4oy3v10kqa" path="res://assets/l1_bg_1.png" id="1_qo76c"]
+[ext_resource type="Script" path="res://scripts/camera.gd" id="3_s3w6k"]
 [ext_resource type="PackedScene" uid="uid://ckdduyp6itwn5" path="res://spawner.tscn" id="5_akxtr"]
 [ext_resource type="PackedScene" uid="uid://b8wcb1enfr6ee" path="res://ground.tscn" id="8_spv53"]
 [ext_resource type="Script" path="res://scripts/terrain.gd" id="8_tujsh"]
-[ext_resource type="Script" path="res://scripts/spawner_system.gd" id="8_w8tsw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g0o5x"]
 size = Vector2(50, 50)
@@ -57,7 +57,7 @@ _data = {
 size = Vector2(57.3876, 54)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vua0g"]
-size = Vector2(36.2448, 4)
+size = Vector2(42.2856, 5)
 
 [node name="Game" type="Node2D"]
 position = Vector2(0, -2)
@@ -86,12 +86,12 @@ position = Vector2(95, 494)
 scale = Vector2(2.05938, 2.05938)
 texture = ExtResource("1_qo76c")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." groups=["camera"]]
 unique_name_in_owner = true
 position = Vector2(-241, 125)
 scale = Vector2(0.993246, 1)
-offset = Vector2(2.08165e-12, 100)
-zoom = Vector2(0.6, 0.6)
+offset = Vector2(2.08165e-12, -50)
+zoom = Vector2(0.7, 0.7)
 limit_left = -2000
 limit_bottom = 2000
 limit_smoothed = true
@@ -99,6 +99,7 @@ drag_horizontal_enabled = true
 drag_vertical_enabled = true
 editor_draw_limits = true
 editor_draw_drag_margin = true
+script = ExtResource("3_s3w6k")
 
 [node name="Character" type="CharacterBody2D" parent="."]
 unique_name_in_owner = true
@@ -148,12 +149,14 @@ unique_name_in_owner = true
 position = Vector2(0, -25)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Character/HeadDetector"]
+position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_vua0g")
 
 [node name="Terrain" type="Node2D" parent="."]
-position = Vector2(0, -33)
+position = Vector2(2.08165e-12, 2.08165e-12)
 script = ExtResource("8_tujsh")
 ground_scene = ExtResource("8_spv53")
+spawner_scene = ExtResource("5_akxtr")
 
 [node name="GameOverUI" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
@@ -185,10 +188,6 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Restart"
 
-[node name="SpawnerSystem" type="Node2D" parent="."]
-script = ExtResource("8_w8tsw")
-spawner_scene = ExtResource("5_akxtr")
-
 [node name="ScoreUI" type="CanvasLayer" parent="."]
 
 [node name="MarginContainer" type="MarginContainer" parent="ScoreUI"]
@@ -202,6 +201,10 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Altitude: 0"
+
+[node name="PlayerPos" type="Label" parent="ScoreUI"]
+offset_right = 40.0
+offset_bottom = 23.0
 
 [connection signal="body_entered" from="Character/GroundDetector" to="Character" method="_on_ground_detector_body_entered"]
 [connection signal="body_exited" from="Character/GroundDetector" to="Character" method="_on_ground_detector_body_exited"]

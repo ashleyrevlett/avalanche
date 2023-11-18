@@ -64,7 +64,7 @@ func _process(delta):
 		var new_rad = deg_to_rad(angle) + angle_modifier
 		var new_rot = lerp_angle(rotation, new_rad, 2 * delta)
 		rotation = new_rot
-		print("rotation:", rotation)
+		# print("rotation:", rotation)
 
 	if (spawner_objects.size() > 0):
 		var first_pos = spawner_objects[0].global_position

@@ -50,7 +50,7 @@ func _physics_process(delta):
 
 	move_and_slide()
 	
-	_clamp_position()
+	#_clamp_position()
 	
 	# detect player death by off camera position
 	if not is_onscreen:

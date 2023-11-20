@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://1i0se866c1tg"]
+[gd_scene load_steps=40 format=3 uid="uid://1i0se866c1tg"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_8h2uv"]
 [ext_resource type="Texture2D" uid="uid://dhd7xyrddhrll" path="res://assets/l0_bg_1.png" id="1_8vm77"]
@@ -6,58 +6,250 @@
 [ext_resource type="Texture2D" uid="uid://b0k4oy3v10kqa" path="res://assets/l1_bg_1.png" id="1_qo76c"]
 [ext_resource type="Script" path="res://scripts/camera.gd" id="3_s3w6k"]
 [ext_resource type="PackedScene" uid="uid://ckdduyp6itwn5" path="res://spawner.tscn" id="5_akxtr"]
+[ext_resource type="Texture2D" uid="uid://n8lq0ecw36s8" path="res://assets/goat-spritesheet.png" id="6_cocbs"]
 [ext_resource type="PackedScene" uid="uid://b8wcb1enfr6ee" path="res://ground.tscn" id="8_spv53"]
 [ext_resource type="Script" path="res://scripts/terrain.gd" id="8_tujsh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g0o5x"]
-size = Vector2(50, 50)
+size = Vector2(63.4284, 44)
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_770fh"]
-size = Vector2(50, 50)
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_412fb"]
+animation = &"fall_end"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vohjm"]
+animation = &"fall_loop"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_3mifb"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hc3ai"]
+animation = &"jump_loop"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gxis3"]
+animation = &"jump_up"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_h8yo4"]
+animation = &"walk_right"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_sf5ga"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_i8c70"]
+switch_mode = 2
+advance_mode = 0
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dwhet"]
+switch_mode = 2
+advance_mode = 0
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dn08t"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_xjl2d"]
+switch_mode = 2
+advance_mode = 0
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_7j8cs"]
+switch_mode = 2
+advance_mode = 0
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ivr01"]
+switch_mode = 2
+advance_mode = 0
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_hgj4o"]
+switch_mode = 2
+advance_mode = 0
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_vhhlc"]
+switch_mode = 2
+advance_mode = 0
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_f17mo"]
+switch_mode = 2
+advance_mode = 0
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_e238m"]
+states/End/position = Vector2(808.5, 83.375)
+states/Start/position = Vector2(132, 26.8125)
+states/fall_end/node = SubResource("AnimationNodeAnimation_412fb")
+states/fall_end/position = Vector2(626.703, 38.9)
+states/fall_loop/node = SubResource("AnimationNodeAnimation_vohjm")
+states/fall_loop/position = Vector2(620.203, -36.6)
+states/idle/node = SubResource("AnimationNodeAnimation_3mifb")
+states/idle/position = Vector2(138.568, -94.1657)
+states/jump_loop/node = SubResource("AnimationNodeAnimation_hc3ai")
+states/jump_loop/position = Vector2(494.703, -105.1)
+states/jump_up/node = SubResource("AnimationNodeAnimation_gxis3")
+states/jump_up/position = Vector2(326.703, -114.1)
+states/walk_right/node = SubResource("AnimationNodeAnimation_h8yo4")
+states/walk_right/position = Vector2(301.738, 50.2967)
+transitions = ["jump_up", "jump_loop", SubResource("AnimationNodeStateMachineTransition_sf5ga"), "jump_loop", "fall_loop", SubResource("AnimationNodeStateMachineTransition_i8c70"), "fall_loop", "fall_end", SubResource("AnimationNodeStateMachineTransition_dwhet"), "Start", "idle", SubResource("AnimationNodeStateMachineTransition_dn08t"), "idle", "jump_up", SubResource("AnimationNodeStateMachineTransition_xjl2d"), "fall_end", "idle", SubResource("AnimationNodeStateMachineTransition_7j8cs"), "walk_right", "idle", SubResource("AnimationNodeStateMachineTransition_ivr01"), "walk_right", "jump_up", SubResource("AnimationNodeStateMachineTransition_hgj4o"), "fall_end", "walk_right", SubResource("AnimationNodeStateMachineTransition_vhhlc"), "idle", "walk_right", SubResource("AnimationNodeStateMachineTransition_f17mo")]
+graph_offset = Vector2(40.0276, -134.343)
 
 [sub_resource type="Animation" id="Animation_sq7yu"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:self_modulate")
+tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
+"update": 1,
+"values": [8]
 }
 
-[sub_resource type="Animation" id="Animation_u01bd"]
-resource_name = "dying"
-length = 0.3
+[sub_resource type="Animation" id="Animation_u2ydn"]
+resource_name = "fall_end"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [7]
+}
+
+[sub_resource type="Animation" id="Animation_m66xt"]
+resource_name = "fall_loop"
+length = 0.1
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:self_modulate")
+tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 0, 0, 1)]
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+
+[sub_resource type="Animation" id="Animation_gmb8j"]
+resource_name = "idle"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [12]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_lrmki"]
+resource_name = "jump_loop"
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [5]
+}
+
+[sub_resource type="Animation" id="Animation_h401r"]
+resource_name = "jump_up"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+
+[sub_resource type="Animation" id="Animation_38ad5"]
+resource_name = "walk_left"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [8, 9, 10, 11]
+}
+
+[sub_resource type="Animation" id="Animation_kq68f"]
+resource_name = "walk_right"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [12, 13, 14, 15]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3beka"]
 _data = {
 "RESET": SubResource("Animation_sq7yu"),
-"dying": SubResource("Animation_u01bd")
+"fall_end": SubResource("Animation_u2ydn"),
+"fall_loop": SubResource("Animation_m66xt"),
+"idle": SubResource("Animation_gmb8j"),
+"jump_loop": SubResource("Animation_lrmki"),
+"jump_up": SubResource("Animation_h401r"),
+"walk_left": SubResource("Animation_38ad5"),
+"walk_right": SubResource("Animation_kq68f")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1esqg"]
-size = Vector2(57.3876, 54)
+size = Vector2(54.3672, 16.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vua0g"]
-size = Vector2(42.2856, 5)
+size = Vector2(38.2584, 6.5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x6xs8"]
+bg_color = Color(0.980392, 0, 0.917647, 1)
 
 [node name="Game" type="Node2D"]
 position = Vector2(0, -2)
@@ -111,8 +303,6 @@ script = ExtResource("3_s3w6k")
 
 [node name="Character" type="CharacterBody2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(-241, 125)
-scale = Vector2(0.993246, 1)
 collision_mask = 7
 floor_stop_on_slope = false
 floor_block_on_wall = false
@@ -124,26 +314,35 @@ acceleration = 0.35
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Character"]
 unique_name_in_owner = true
-position = Vector2(2.08165e-12, 2.08165e-12)
+position = Vector2(-0.503418, 0)
 shape = SubResource("RectangleShape2D_g0o5x")
 
-[node name="Sprite2D" type="Sprite2D" parent="Character"]
-scale = Vector2(-2.92466, 4)
-texture = SubResource("PlaceholderTexture2D_770fh")
-hframes = 3
-vframes = 4
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Character/Sprite2D"]
+[node name="AnimationTree" type="AnimationTree" parent="Character"]
 unique_name_in_owner = true
+tree_root = SubResource("AnimationNodeStateMachine_e238m")
+anim_player = NodePath("../AnimationPlayer")
+active = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Character"]
+unique_name_in_owner = true
+root_node = NodePath("../Sprite2D")
+autoplay = "idle"
 libraries = {
 "": SubResource("AnimationLibrary_3beka")
 }
+
+[node name="Sprite2D" type="Sprite2D" parent="Character"]
+scale = Vector2(1.3, 1.3)
+texture = ExtResource("6_cocbs")
+hframes = 4
+vframes = 4
+frame = 8
 
 [node name="GroundDetector" type="Area2D" parent="Character"]
 collision_mask = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Character/GroundDetector"]
-position = Vector2(0, 2)
+position = Vector2(0, 20.75)
 shape = SubResource("RectangleShape2D_1esqg")
 debug_color = Color(0.513726, 0.772549, 0.478431, 0.419608)
 
@@ -156,7 +355,7 @@ position = Vector2(0, -25)
 collision_mask = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Character/HeadDetector"]
-position = Vector2(0, -1)
+position = Vector2(1.00676, 2)
 shape = SubResource("RectangleShape2D_vua0g")
 
 [node name="Terrain" type="Node2D" parent="."]
@@ -168,31 +367,42 @@ spawner_scene = ExtResource("5_akxtr")
 [node name="GameOverUI" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GameOverUI"]
+[node name="PanelContainer" type="PanelContainer" parent="GameOverUI"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -163.5
-offset_top = -60.5
-offset_right = 163.5
-offset_bottom = 60.5
+offset_left = -131.0
+offset_top = -71.5
+offset_right = 131.0
+offset_bottom = 71.5
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="GameOverUI/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOverUI/PanelContainer/MarginContainer"]
+layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="GameOverLabel" type="Label" parent="GameOverUI/VBoxContainer"]
+[node name="GameOverLabel" type="Label" parent="GameOverUI/PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
 text = "Game Over"
 horizontal_alignment = 1
 
-[node name="RestartButton" type="Button" parent="GameOverUI/VBoxContainer"]
+[node name="RestartButton" type="Button" parent="GameOverUI/PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_x6xs8")
 text = "Restart"
 
 [node name="ScoreUI" type="CanvasLayer" parent="."]
@@ -203,15 +413,20 @@ offset_bottom = 40.0
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 
-[node name="ScoreLabel" type="Label" parent="ScoreUI/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ScoreUI/MarginContainer"]
+layout_mode = 2
+
+[node name="ScoreLabel" type="Label" parent="ScoreUI/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Altitude: 0"
 
-[node name="PlayerPos" type="Label" parent="ScoreUI"]
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="PlayerPos" type="Label" parent="ScoreUI/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "POS:"
 
 [connection signal="body_entered" from="Character/GroundDetector" to="Character" method="_on_ground_detector_body_entered"]
 [connection signal="body_exited" from="Character/GroundDetector" to="Character" method="_on_ground_detector_body_exited"]

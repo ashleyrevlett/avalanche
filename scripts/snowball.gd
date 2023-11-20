@@ -3,6 +3,9 @@ extends RigidBody2D
 @export var grow_velocity = 60
 @export var min_radius = 10.0
 @export var max_radius = 100.0
+@export var min_mass = 0.1
+@export var max_mass = 1.0
+
 
 var supersize: bool
 var radius: float
@@ -18,8 +21,8 @@ func _ready():
 	supersize = true if randf() < .05 else false
 	
 	if (supersize):
-		target_radius = max_radius * 3
-		%Sprite2D.self_modulate = Color("ff0000")
+		target_radius = max_radius * 2
+		#%Sprite2D.self_modulate = Color("ff0000")
 
 	else:
 		target_radius = randf_range(min_radius, max_radius)
@@ -54,5 +57,6 @@ func _process(delta):
 func grow(delta):
 	if radius != target_radius:
 		radius = min(target_radius, radius + (grow_velocity * delta))
+		mass = radius / max_radius
 		_update_display()
 	

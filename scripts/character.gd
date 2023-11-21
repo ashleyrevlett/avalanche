@@ -16,6 +16,7 @@ signal player_death
 @onready var anim_tree: AnimationTree = %AnimationTree
 
 var on_ground = true
+var grounds_under_player = []
 var jumps_since_ground = 0
 
 var time_elapsed_offscreen = 0
@@ -24,11 +25,12 @@ var time_offscreen_til_death = 1 # sec
 
 var bodies_on_head = []
 var time_elapsed_crushed = 0
-var time_crushed_til_death = .2 # sec
+var time_crushed_til_death = .5 # sec
 
 
 func _ready():
-	player_width = %CollisionShape2D.shape.get_rect().size.x
+	#player_width = %CollisionShape2D.shape.get_rect().size.x
+	player_width = %CollisionShape2D.shape.height # rotated 90 deg so use height for width
 
 
 func _update_animation():
@@ -36,9 +38,10 @@ func _update_animation():
 	var x_dir = Input.get_axis("left", "right")
 	
 	if not on_ground:
+		print(on_ground, " ", velocity.y)
 		if (velocity.y < -jump_threshold):
 			state_machine.travel("jump_loop")
-		elif (velocity.y > jump_threshold): 
+		elif (velocity.y > jump_threshold * 2): 
 			state_machine.travel("fall_loop")
 		else:
 			state_machine.travel("idle")
@@ -99,14 +102,22 @@ func _physics_process(delta):
 	_detect_death(delta)	
 
 
+func _process(delta):
+	return
+	%PlayerPos.text = "POS: (%s, %s)" % [int(global_position.x), int(global_position.y)]
+	%PlayerPos.text += "\nVEL: (%s, %s)" % [int(velocity.x), int(velocity.y)]
+	%PlayerPos.text += "\nOn ground: %s" % on_ground
+
 func _on_ground_detector_body_entered(body):
+	grounds_under_player.append(body)
 	on_ground = true
 	jumps_since_ground = 0
-	#player_state = State.IDLE
 
 
 func _on_ground_detector_body_exited(body):
-	on_ground = false
+	grounds_under_player.erase(body)
+	if grounds_under_player.size() == 0:
+		on_ground = false
 
 
 func _on_screen_exited():

@@ -1,17 +1,19 @@
-[gd_scene load_steps=40 format=3 uid="uid://1i0se866c1tg"]
+[gd_scene load_steps=41 format=3 uid="uid://1i0se866c1tg"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_8h2uv"]
-[ext_resource type="Texture2D" uid="uid://dhd7xyrddhrll" path="res://assets/l0_bg_1.png" id="1_8vm77"]
 [ext_resource type="Script" path="res://scripts/character.gd" id="1_elf0q"]
-[ext_resource type="Texture2D" uid="uid://b0k4oy3v10kqa" path="res://assets/l1_bg_1.png" id="1_qo76c"]
+[ext_resource type="Texture2D" uid="uid://djsnc7onujkrx" path="res://assets/background/sky_lightened.png" id="2_nhrc0"]
+[ext_resource type="Texture2D" uid="uid://ddod3xot37kpj" path="res://assets/background/clouds_bg.png" id="3_75ur3"]
 [ext_resource type="Script" path="res://scripts/camera.gd" id="3_s3w6k"]
+[ext_resource type="Texture2D" uid="uid://ct17gq673056" path="res://assets/background/clouds_mg_1_lightened.png" id="4_ctuje"]
 [ext_resource type="PackedScene" uid="uid://ckdduyp6itwn5" path="res://spawner.tscn" id="5_akxtr"]
 [ext_resource type="Texture2D" uid="uid://n8lq0ecw36s8" path="res://assets/goat-spritesheet.png" id="6_cocbs"]
 [ext_resource type="PackedScene" uid="uid://b8wcb1enfr6ee" path="res://ground.tscn" id="8_spv53"]
 [ext_resource type="Script" path="res://scripts/terrain.gd" id="8_tujsh"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_g0o5x"]
-size = Vector2(63.4284, 44)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yuj6b"]
+radius = 25.0
+height = 73.0
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_412fb"]
 animation = &"fall_end"
@@ -242,11 +244,11 @@ _data = {
 "walk_right": SubResource("Animation_kq68f")
 }
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_1esqg"]
-size = Vector2(54.3672, 16.5)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sxh7d"]
+size = Vector2(58, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vua0g"]
-size = Vector2(38.2584, 6.5)
+size = Vector2(33.9865, 6.5)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x6xs8"]
 bg_color = Color(0.980392, 0, 0.917647, 1)
@@ -257,39 +259,31 @@ script = ExtResource("1_8h2uv")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 layer = -1
-visible = false
-follow_viewport_enabled = true
+scroll_ignore_camera_zoom = true
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_scale = Vector2(0.1, 0.1)
-motion_mirroring = Vector2(3820, 30)
+motion_scale = Vector2(0.01, 0.01)
+motion_mirroring = Vector2(1280, 720)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-scale = Vector2(6, 6)
-texture = ExtResource("1_8vm77")
-offset = Vector2(2.08165e-12, 2.08165e-12)
-
-[node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-position = Vector2(0, -4266)
-scale = Vector2(6, 6)
-texture = ExtResource("1_8vm77")
-offset = Vector2(2.08165e-12, 2.08165e-12)
-
-[node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-position = Vector2(0, -2190)
-scale = Vector2(6, 6)
-texture = ExtResource("1_8vm77")
-offset = Vector2(2.08165e-12, 2.08165e-12)
-flip_v = true
+texture = ExtResource("2_nhrc0")
+centered = false
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_scale = Vector2(0.15, 0.15)
-motion_mirroring = Vector2(1440, 2.08165e-12)
+motion_scale = Vector2(0.2, 0.02)
+motion_mirroring = Vector2(1280, 2.08165e-12)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
-position = Vector2(95, 694)
-scale = Vector2(2.05938, 2.05938)
-texture = ExtResource("1_qo76c")
+texture = ExtResource("3_75ur3")
+centered = false
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.3, 0.05)
+motion_mirroring = Vector2(1280, 2.08165e-12)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3"]
+texture = ExtResource("4_ctuje")
+centered = false
 
 [node name="Camera2D" type="Camera2D" parent="." groups=["camera"]]
 unique_name_in_owner = true
@@ -304,7 +298,6 @@ script = ExtResource("3_s3w6k")
 [node name="Character" type="CharacterBody2D" parent="."]
 unique_name_in_owner = true
 collision_mask = 7
-floor_stop_on_slope = false
 floor_block_on_wall = false
 floor_max_angle = 1.5708
 script = ExtResource("1_elf0q")
@@ -314,8 +307,9 @@ acceleration = 0.35
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Character"]
 unique_name_in_owner = true
-position = Vector2(-0.503418, 0)
-shape = SubResource("RectangleShape2D_g0o5x")
+position = Vector2(-0.503418, 3)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_yuj6b")
 
 [node name="AnimationTree" type="AnimationTree" parent="Character"]
 unique_name_in_owner = true
@@ -332,7 +326,7 @@ libraries = {
 }
 
 [node name="Sprite2D" type="Sprite2D" parent="Character"]
-scale = Vector2(1.3, 1.3)
+scale = Vector2(1.5, 1.5)
 texture = ExtResource("6_cocbs")
 hframes = 4
 vframes = 4
@@ -342,8 +336,8 @@ frame = 8
 collision_mask = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Character/GroundDetector"]
-position = Vector2(0, 20.75)
-shape = SubResource("RectangleShape2D_1esqg")
+position = Vector2(0, 25.25)
+shape = SubResource("RectangleShape2D_sxh7d")
 debug_color = Color(0.513726, 0.772549, 0.478431, 0.419608)
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="Character"]
@@ -424,9 +418,7 @@ text = "Altitude: 0"
 
 [node name="PlayerPos" type="Label" parent="ScoreUI/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
-text = "POS:"
 
 [connection signal="body_entered" from="Character/GroundDetector" to="Character" method="_on_ground_detector_body_entered"]
 [connection signal="body_exited" from="Character/GroundDetector" to="Character" method="_on_ground_detector_body_exited"]

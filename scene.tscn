@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://1i0se866c1tg"]
+[gd_scene load_steps=45 format=3 uid="uid://1i0se866c1tg"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_8h2uv"]
 [ext_resource type="Script" path="res://scripts/character.gd" id="1_elf0q"]
@@ -10,6 +10,10 @@
 [ext_resource type="Texture2D" uid="uid://n8lq0ecw36s8" path="res://assets/goat-spritesheet.png" id="6_cocbs"]
 [ext_resource type="PackedScene" uid="uid://b8wcb1enfr6ee" path="res://ground.tscn" id="8_spv53"]
 [ext_resource type="Script" path="res://scripts/terrain.gd" id="8_tujsh"]
+[ext_resource type="Texture2D" uid="uid://bad5ykcksldxs" path="res://assets/panel.png" id="11_255rr"]
+[ext_resource type="FontFile" uid="uid://botujj2p7h2kq" path="res://assets/fonts/8BITWONDERNominal.ttf" id="12_j5djg"]
+[ext_resource type="FontFile" uid="uid://bnl5v78xsxu8g" path="res://assets/fonts/MunroSmall.ttf" id="13_df44p"]
+[ext_resource type="Theme" uid="uid://bg3tjxvqinco1" path="res://assets/new_theme.tres" id="14_dmtj7"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yuj6b"]
 radius = 25.0
@@ -250,8 +254,12 @@ size = Vector2(58, 20)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vua0g"]
 size = Vector2(33.9865, 6.5)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x6xs8"]
-bg_color = Color(0.980392, 0, 0.917647, 1)
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2d4bo"]
+texture = ExtResource("11_255rr")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
 
 [node name="Game" type="Node2D"]
 position = Vector2(0, -2)
@@ -360,6 +368,7 @@ spawner_scene = ExtResource("5_akxtr")
 
 [node name="GameOverUI" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
+process_mode = 3
 
 [node name="PanelContainer" type="PanelContainer" parent="GameOverUI"]
 anchors_preset = 8
@@ -373,6 +382,7 @@ offset_right = 131.0
 offset_bottom = 71.5
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("14_dmtj7")
 
 [node name="MarginContainer" type="MarginContainer" parent="GameOverUI/PanelContainer"]
 layout_mode = 2
@@ -388,16 +398,146 @@ theme_override_constants/separation = 20
 [node name="GameOverLabel" type="Label" parent="GameOverUI/PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 48
+theme = ExtResource("14_dmtj7")
+theme_override_fonts/font = ExtResource("12_j5djg")
+theme_override_font_sizes/font_size = 38
 text = "Game Over"
 horizontal_alignment = 1
 
-[node name="RestartButton" type="Button" parent="GameOverUI/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Control" type="Control" parent="GameOverUI/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 20)
+layout_mode = 2
+
+[node name="GameOverRestartButton" type="Button" parent="GameOverUI/PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 32
-theme_override_styles/normal = SubResource("StyleBoxFlat_x6xs8")
+theme = ExtResource("14_dmtj7")
 text = "Restart"
+
+[node name="GameStartUI" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+process_mode = 3
+visible = false
+
+[node name="PanelContainer" type="PanelContainer" parent="GameStartUI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_2d4bo")
+
+[node name="MarginContainer" type="MarginContainer" parent="GameStartUI/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameStartUI/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Intro" type="Label" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("12_j5djg")
+theme_override_font_sizes/font_size = 48
+text = "Avalanche"
+horizontal_alignment = 1
+
+[node name="Controls" type="Label" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("13_df44p")
+theme_override_font_sizes/font_size = 28
+text = "CLIMB THE MOUNTAIN!
+Move: WASD or arrow KEYS
+Jump:  Space"
+horizontal_alignment = 1
+
+[node name="Control" type="Control" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 10)
+layout_mode = 2
+
+[node name="StartButton" type="Button" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("14_dmtj7")
+text = "Start"
+
+[node name="Control2" type="Control" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 10)
+layout_mode = 2
+
+[node name="PauseUI" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+process_mode = 3
+visible = false
+
+[node name="PanelContainer" type="PanelContainer" parent="PauseUI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_2d4bo")
+
+[node name="MarginContainer" type="MarginContainer" parent="PauseUI/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 60
+theme_override_constants/margin_bottom = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseUI/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Intro" type="Label" parent="PauseUI/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("12_j5djg")
+theme_override_font_sizes/font_size = 48
+text = "Paused"
+horizontal_alignment = 1
+
+[node name="Control" type="Control" parent="PauseUI/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 30)
+layout_mode = 2
+
+[node name="ResumeButton" type="Button" parent="PauseUI/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("14_dmtj7")
+text = "Resume"
+
+[node name="Control3" type="Control" parent="PauseUI/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 20)
+layout_mode = 2
+
+[node name="QuitButton" type="Button" parent="PauseUI/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("14_dmtj7")
+text = "Quit"
+
+[node name="Control2" type="Control" parent="PauseUI/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 10)
+layout_mode = 2
 
 [node name="ScoreUI" type="CanvasLayer" parent="."]
 
@@ -413,7 +553,8 @@ layout_mode = 2
 [node name="ScoreLabel" type="Label" parent="ScoreUI/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 32
+theme = ExtResource("14_dmtj7")
+theme_override_font_sizes/font_size = 48
 text = "Altitude: 0"
 
 [node name="PlayerPos" type="Label" parent="ScoreUI/MarginContainer/VBoxContainer"]

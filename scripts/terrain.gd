@@ -31,7 +31,7 @@ func _spawn_spawner():
 		instance.position = new_pos
 	add_child(instance)
 	spawner_objects.append(instance)
-	print("spawned at ", instance.position)
+	#print("spawned at ", instance.position)
 	
 
 func _spawn_ground():

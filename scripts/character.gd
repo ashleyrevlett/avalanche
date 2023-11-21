@@ -38,7 +38,7 @@ func _update_animation():
 	var x_dir = Input.get_axis("left", "right")
 	
 	if not on_ground:
-		print(on_ground, " ", velocity.y)
+		#print(on_ground, " ", velocity.y)
 		if (velocity.y < -jump_threshold):
 			state_machine.travel("jump_loop")
 		elif (velocity.y > jump_threshold * 2): 
@@ -64,12 +64,12 @@ func _detect_death(delta):
 		time_elapsed_offscreen += delta
 		
 	if time_elapsed_offscreen >= time_offscreen_til_death:
-		print("death by offscreen")
+		#print("death by offscreen")
 		player_death.emit()
 	
 	# detect player death by crushing
 	if (bodies_on_head.size() > 0 and on_ground):
-		print("death by crushing")
+		#print("death by crushing")
 		time_elapsed_crushed += delta
 		var tween = get_tree().create_tween()
 		tween.tween_property($Sprite2D, "modulate", Color.RED, .1)
@@ -122,13 +122,13 @@ func _on_ground_detector_body_exited(body):
 
 func _on_screen_exited():
 	is_onscreen = false
-	print("_on_screen_exited, is_onscreen:", is_onscreen)
+	#print("_on_screen_exited, is_onscreen:", is_onscreen)
 
 
 func _on_screen_entered():
 	is_onscreen = true
 	time_elapsed_offscreen = 0
-	print("_on_screen_entered, is_onscreen:", is_onscreen)
+	#print("_on_screen_entered, is_onscreen:", is_onscreen)
 
 
 func _on_head_detector_body_entered(body):

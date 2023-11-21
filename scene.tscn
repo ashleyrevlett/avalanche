@@ -395,13 +395,19 @@ theme_override_constants/margin_bottom = 40
 layout_mode = 2
 theme_override_constants/separation = 20
 
+[node name="Label" type="Label" parent="GameOverUI/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("12_j5djg")
+theme_override_font_sizes/font_size = 60
+text = "GAME OVER"
+horizontal_alignment = 1
+
 [node name="GameOverLabel" type="Label" parent="GameOverUI/PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("14_dmtj7")
-theme_override_fonts/font = ExtResource("12_j5djg")
-theme_override_font_sizes/font_size = 38
-text = "Game Over"
+theme_override_font_sizes/font_size = 50
+text = "Final Score"
 horizontal_alignment = 1
 
 [node name="Control" type="Control" parent="GameOverUI/PanelContainer/MarginContainer/VBoxContainer"]
@@ -452,17 +458,29 @@ theme_override_font_sizes/font_size = 48
 text = "Avalanche"
 horizontal_alignment = 1
 
+[node name="Intro2" type="Label" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("12_j5djg")
+theme_override_font_sizes/font_size = 25
+text = "Scale the Mountain"
+horizontal_alignment = 1
+
+[node name="Control" type="Control" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 10)
+layout_mode = 2
+
 [node name="Controls" type="Label" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("13_df44p")
 theme_override_font_sizes/font_size = 28
-text = "CLIMB THE MOUNTAIN!
-Move: WASD or arrow KEYS
-Jump:  Space"
+text = "Move: WASD / Arrows
+Jump: Space
+Pause: Esc"
 horizontal_alignment = 1
 
-[node name="Control" type="Control" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Control3" type="Control" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(2.08165e-12, 10)
 layout_mode = 2
 

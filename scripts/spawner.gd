@@ -19,7 +19,7 @@ func _ready():
 	$EmitTimer.wait_time = emit_speed
 	$EmitTimer.timeout.connect(_spawn)
 	
-	$EndTimer.wait_time = duration
+	$EndTimer.wait_time = duration * camera.camera_rect.position.y / 100
 	$EndTimer.timeout.connect(_on_end_timer_timeout)
 
 

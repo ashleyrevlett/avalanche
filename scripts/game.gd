@@ -37,7 +37,7 @@ func _unpause_game():
 
 
 func _on_game_over():
-	%GameOverLabel.text = "Game Over!\n Final Altitude: %sm" % floor(altitude)
+	%GameOverLabel.text = "Final Altitude: %sm" % floor(altitude)
 	%GameOverUI.show()
 	get_tree().paused = true
 	

@@ -308,6 +308,7 @@ unique_name_in_owner = true
 collision_mask = 7
 floor_block_on_wall = false
 floor_max_angle = 1.5708
+platform_floor_layers = 4294967294
 script = ExtResource("1_elf0q")
 speed = 700
 jump_speed = -1500

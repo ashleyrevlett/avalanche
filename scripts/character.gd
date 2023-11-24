@@ -9,11 +9,13 @@ signal player_death
 @export_range(0.0, 1.0) var friction = 0.1
 @export_range(0.0 , 1.0) var acceleration = 0.25
 @export var jump_threshold = 0.1
+@export var is_at_left_edge = false
 
 @onready var player_width: float
 @onready var camera: Camera2D = %Camera2D
 @onready var animator: AnimationPlayer = %AnimationPlayer
 @onready var anim_tree: AnimationTree = %AnimationTree
+
 
 var on_ground = true
 var grounds_under_player = []
@@ -82,6 +84,7 @@ func _detect_death(delta):
 		player_death.emit()
 
 
+
 func _physics_process(delta):
 	# player movement
 	var dir = Input.get_axis("left", "right")
@@ -90,6 +93,7 @@ func _physics_process(delta):
 	else:
 		velocity.x = lerp(velocity.x, 0.0, friction)
 
+
 	# player jump + gravity
 	velocity.y += gravity * delta
 	if jumps_since_ground < 2 and Input.is_action_just_pressed("jump"):
@@ -97,7 +101,15 @@ func _physics_process(delta):
 		velocity.y = jump_speed
 	velocity.y = clamp(velocity.y, -max_velocity, max_velocity)
 	
+	
+	is_at_left_edge = global_position.x + (player_width / 2) <= camera.camera_rect.position.x - camera.camera_rect.size.x/2 + player_width / 2
+	if (is_at_left_edge):
+		if (get_real_velocity().x < 0 or velocity.x < 0):
+			velocity.x = 0
+		#global_position.x = camera.camera_rect.position.x + (player_width / 2) - camera.camera_rect.size.x/2
+	
 	move_and_slide()
+
 	_update_animation()
 	_detect_death(delta)	
 
@@ -107,6 +119,7 @@ func _process(delta):
 	%PlayerPos.text = "POS: (%s, %s)" % [int(global_position.x), int(global_position.y)]
 	%PlayerPos.text += "\nVEL: (%s, %s)" % [int(velocity.x), int(velocity.y)]
 	%PlayerPos.text += "\nOn ground: %s" % on_ground
+
 
 func _on_ground_detector_body_entered(body):
 	grounds_under_player.append(body)

@@ -6,7 +6,6 @@ extends RigidBody2D
 @export var min_mass = 0.1
 @export var max_mass = 1.0
 
-
 var supersize: bool
 var radius: float
 var target_radius: float
@@ -32,31 +31,25 @@ func _ready():
 	_update_display()
 
 
-func _update_display():
-	%CollisionShape2D.shape.radius = radius
-	var r_scale = remap_range(radius, min_radius, max_radius, .1, 2)
-	%Sprite2D.scale = Vector2(r_scale, r_scale)
 
-
-func _process(delta):
+func _physics_process(delta):
 	# if rolling down, grow snowball
 	#if (abs(linear_velocity.x) > grow_velocity):
 	grow(delta)
-
+	
 	# turn to color, make dangerous		
 	if (radius > max_radius and "supersize" not in get_groups()):
 		add_to_group("supersize")
 
-	# if off screen, remove it
-	#if (position.y > 2500):
-	#	queue_free()
-		
-	
-
 
 func grow(delta):
-	if radius != target_radius:
+	if radius < target_radius:
 		radius = min(target_radius, radius + (grow_velocity * delta))
 		mass = radius / max_radius
 		_update_display()
 	
+
+func _update_display():
+	%CollisionShape2D.shape.radius = radius
+	var r_scale = remap_range(radius, min_radius, max_radius, .1, 2)
+	%Sprite2D.scale = Vector2(r_scale, r_scale)

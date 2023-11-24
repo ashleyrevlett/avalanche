@@ -68,9 +68,8 @@ func _process(delta):
 
 	if (spawner_objects.size() > 0):
 		var first_pos = spawner_objects[0].global_position
-		#print(first_pos.x, camera_rect.position.x)
-		if (first_pos.x < camera.camera_rect.position.x - camera.camera_size.x):
+		if (first_pos.x < camera.camera_rect.position.x - camera.camera_size.x * 2):
 			var instance = spawner_objects.pop_front()
-			# print("removing spawner")
+			print("removing spawner")
 			instance.queue_free()
 			_spawn_spawner()

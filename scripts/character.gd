@@ -101,7 +101,7 @@ func _physics_process(delta):
 	
 	# player jump + gravity
 	velocity.y += gravity * delta
-	print("jumps_since_ground: ", jumps_since_ground)
+	#print("jumps_since_ground: ", jumps_since_ground)
 	if (jumps_since_ground < 2 or grounds_under_player.size() > 0) and Input.is_action_just_pressed("jump"):
 		jumps_since_ground += 1
 		velocity.y = jump_speed

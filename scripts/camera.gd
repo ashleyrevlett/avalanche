@@ -1,7 +1,7 @@
 extends Camera2D
 
 @export var camera_rect: Rect2
-@export var camera_size: Vector2
+
 
 @onready var player: CharacterBody2D
 
@@ -14,8 +14,7 @@ extends Camera2D
 var last_position: Vector2
 
 func _ready():
-	camera_size = get_viewport_rect().size * zoom # * camera.zoom
-	camera_rect = Rect2(get_screen_center_position() - camera_size / 2, camera_size)
+	camera_rect = _get_camera_rect()
 	player = %Character
 
 
@@ -42,13 +41,25 @@ func _process(delta):
 			
 		global_position = lerp(global_position, new_pos, move_speed)
 			
-		var zoom_factor_y = camera_size.y / abs(player_pos.y - ground_pos.y)
+		var zoom_factor_y = camera_rect.size.y / abs(player_pos.y - ground_pos.y)
 		var zoom_factor = min(max_zoom, max(min_zoom, zoom_factor_y))
 
 		zoom = lerp(self.zoom, Vector2.ONE * zoom_factor, zoom_speed)
 	
 	# if zoom has changed so will rect
-	camera_size = get_viewport_rect().size * zoom # * camera.zoom
-	camera_rect = Rect2(get_screen_center_position() - camera_size / 2, camera_size)
-		
+	camera_rect = _get_camera_rect()
 	last_position = global_position
+
+
+func _get_camera_rect():
+	var ctrans = get_canvas_transform()
+	var min_pos = -ctrans.get_origin() / ctrans.get_scale()
+
+	# The maximum edge is obtained by adding the rectangle size.
+	# Because it's a size it's only affected by zoom, so divide by scale too.
+	var view_size = get_viewport_rect().size / ctrans.get_scale()
+	var max_pos = min_pos + view_size
+	var r = Rect2(min_pos.x, min_pos.y, view_size.x, view_size.y)
+	#print(r)
+	return r
+

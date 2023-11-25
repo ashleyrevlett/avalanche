@@ -15,23 +15,25 @@ var spawner_objects = []
 func _ready():
 	rotation_degrees = angle
 	for x in range(1, 8):
-		_spawn_ground()	
+		_spawn_ground()
 		_spawn_spawner()
-
+	
 
 func _spawn_spawner():
 	var instance = spawner_scene.instantiate()
 	var y_pos = 360 + ground_height / 2 * -1
 	if (spawner_objects.size() == 0):
-		instance.position = Vector2(camera.camera_size.x/2, y_pos)
+		instance.position = Vector2(camera.camera_rect.end.x, y_pos)
+		print(instance.position, ":", camera.camera_rect)
 	else:
-		var random_x = randi_range(camera.camera_size.x * .6, camera.camera_size.x * 1.2)
-		#var random_y = randi_range(0, camera.camera_size.y/5)
+		# position this spawner to the right of the last one, 
+		# plus approximately the camera frame's width
+		var random_x = randi_range(camera.camera_rect.size.x * .3, camera.camera_rect.size.x)
 		var new_pos = Vector2(spawner_objects[-1].position.x + random_x, y_pos)
 		instance.position = new_pos
 	add_child(instance)
 	spawner_objects.append(instance)
-	#print("spawned at ", instance.position)
+	print("spawned at ", instance.position)
 	
 
 func _spawn_ground():
@@ -66,9 +68,10 @@ func _process(delta):
 		rotation = new_rot
 		# print("rotation:", rotation)
 
+	# once the player passes a spawner, remove it and add a new one
 	if (spawner_objects.size() > 0):
 		var first_pos = spawner_objects[0].global_position
-		if (first_pos.x < camera.camera_rect.position.x - camera.camera_size.x * 2):
+		if (first_pos.x < camera.camera_rect.position.x - camera.camera_rect.size.x * 2):
 			var instance = spawner_objects.pop_front()
 			print("removing spawner")
 			instance.queue_free()

@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var angle: float = -10
+@export var angle: float = -8
 @export var ground_scene: PackedScene
 @export var spawner_scene: PackedScene
 
@@ -16,6 +16,8 @@ func _ready():
 	rotation_degrees = angle
 	for x in range(1, 8):
 		_spawn_ground()
+	
+	for x in range(1, 4):
 		_spawn_spawner()
 	
 
@@ -28,7 +30,7 @@ func _spawn_spawner():
 	else:
 		# position this spawner to the right of the last one, 
 		# plus approximately the camera frame's width
-		var random_x = randi_range(camera.camera_rect.size.x * .3, camera.camera_rect.size.x)
+		var random_x = randi_range(camera.camera_rect.size.x * .2, camera.camera_rect.size.x * .5)
 		var new_pos = Vector2(spawner_objects[-1].position.x + random_x, y_pos)
 		instance.position = new_pos
 	add_child(instance)
@@ -56,23 +58,23 @@ func _process(delta):
 	
 	if (ground_objects.size() > 0):
 		var first_pos = ground_objects[0].global_position
-		if (first_pos.x + ground_width/2 < camera.camera_rect.position.x - ground_width*2):
+		if (first_pos.x + ground_width/2 < camera.camera_rect.position.x - ground_width/2):
 			var instance = ground_objects.pop_front()
 			instance.queue_free()
 			_spawn_ground()
 	
 		var last_pos = ground_objects[-1].global_position
-		var angle_modifier = deg_to_rad(floor(last_pos.y / 600))
+		var angle_modifier = deg_to_rad(floor(last_pos.y / 800))
 		var new_rad = deg_to_rad(angle) + angle_modifier
 		var new_rot = lerp_angle(rotation, new_rad, 2 * delta)
 		rotation = new_rot
 		# print("rotation:", rotation)
 
-	# once the player passes a spawner, remove it and add a new one
+	# once a spawner appears on screen, remove it and add a new one
 	if (spawner_objects.size() > 0):
 		var first_pos = spawner_objects[0].global_position
-		if (first_pos.x < camera.camera_rect.position.x - camera.camera_rect.size.x * 2):
+		if (first_pos.x < camera.camera_rect.end.x):
 			var instance = spawner_objects.pop_front()
-			print("removing spawner")
-			instance.queue_free()
+			#print("removing spawner")
+			#instance.queue_free()
 			_spawn_spawner()

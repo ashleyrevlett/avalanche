@@ -31,8 +31,9 @@ var time_crushed_til_death = .5 # sec
 
 
 func _ready():
-	#player_width = %CollisionShape2D.shape.get_rect().size.x
-	player_width = %CollisionShape2D.shape.height # rotated 90 deg so use height for width
+	player_width = %CollisionShape2D.shape.get_rect().size.x
+	#player_width = %CollisionShape2D.shape.height # rotated 90 deg so use height for width
+	#player_width = %CollisionShape2D.shape.radius * 2
 
 
 func _update_animation():
@@ -100,7 +101,8 @@ func _physics_process(delta):
 	
 	# player jump + gravity
 	velocity.y += gravity * delta
-	if jumps_since_ground < 2 and Input.is_action_just_pressed("jump"):
+	print("jumps_since_ground: ", jumps_since_ground)
+	if (jumps_since_ground < 2 or grounds_under_player.size() > 0) and Input.is_action_just_pressed("jump"):
 		jumps_since_ground += 1
 		velocity.y = jump_speed
 	velocity.y = clamp(velocity.y, -max_velocity, max_velocity)
@@ -114,13 +116,15 @@ func _physics_process(delta):
 
 func _process(delta):
 	%PlayerPos.text = "POS: (%s, %s)" % [int(global_position.x), int(global_position.y)]
-	# %PlayerPos.text += "\nVEL: (%s, %s)" % [int(velocity.x), int(velocity.y)]
+	%PlayerPos.text += "\nVEL: (%s, %s)" % [int(velocity.x), int(velocity.y)]
+	%PlayerPos.text += "\non_ground: %s" % on_ground
 
 
 func _on_ground_detector_body_entered(body):
 	grounds_under_player.append(body)
 	on_ground = true
 	jumps_since_ground = 0
+	velocity.y = 0
 
 
 func _on_ground_detector_body_exited(body):

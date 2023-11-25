@@ -15,9 +15,8 @@
 [ext_resource type="FontFile" uid="uid://bnl5v78xsxu8g" path="res://assets/fonts/MunroSmall.ttf" id="13_df44p"]
 [ext_resource type="Theme" uid="uid://bg3tjxvqinco1" path="res://assets/new_theme.tres" id="14_dmtj7"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yuj6b"]
-radius = 25.0
-height = 73.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4ahip"]
+size = Vector2(46, 64)
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_412fb"]
 animation = &"fall_end"
@@ -249,10 +248,10 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sxh7d"]
-size = Vector2(58, 20)
+size = Vector2(73, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vua0g"]
-size = Vector2(33.9865, 6.5)
+size = Vector2(52.0135, 6.5)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2d4bo"]
 texture = ExtResource("11_255rr")
@@ -310,8 +309,10 @@ script = ExtResource("3_s3w6k")
 [node name="Character" type="CharacterBody2D" parent="."]
 unique_name_in_owner = true
 collision_mask = 7
+floor_stop_on_slope = false
 floor_block_on_wall = false
 floor_max_angle = 1.5708
+floor_snap_length = 0.0
 platform_floor_layers = 4294967294
 script = ExtResource("1_elf0q")
 speed = 700
@@ -320,9 +321,9 @@ acceleration = 0.35
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Character"]
 unique_name_in_owner = true
-position = Vector2(-0.503418, 3)
+position = Vector2(-0.999999, 1)
 rotation = 1.5708
-shape = SubResource("CapsuleShape2D_yuj6b")
+shape = SubResource("RectangleShape2D_4ahip")
 
 [node name="AnimationTree" type="AnimationTree" parent="Character"]
 unique_name_in_owner = true
@@ -349,7 +350,7 @@ frame = 8
 collision_mask = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Character/GroundDetector"]
-position = Vector2(0, 25.25)
+position = Vector2(-0.5, 24)
 shape = SubResource("RectangleShape2D_sxh7d")
 debug_color = Color(0.513726, 0.772549, 0.478431, 0.419608)
 

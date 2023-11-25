@@ -9,13 +9,12 @@ extends RigidBody2D
 var supersize: bool
 var radius: float
 var target_radius: float
+var camera: Camera2D
 
-
-func remap_range(value, InputA, InputB, OutputA, OutputB):
-	return(value - InputA) / (InputB - InputA) * (OutputB - OutputA) + OutputA
-	
 
 func _ready():
+	camera = get_tree().get_first_node_in_group("camera")
+	
 	# 50px is scale=1 for sprite
 	supersize = true if randf() < .05 else false
 	
@@ -42,6 +41,14 @@ func _physics_process(delta):
 		add_to_group("supersize")
 
 
+func _process(delta):
+	var left_frame_x = camera.camera_rect.position.x - camera.camera_rect.size.x / 2
+	"""
+	if (global_position.x + max_radius < left_frame_x):
+		print("removing snowball!")
+		queue_free()
+	"""
+
 func grow(delta):
 	if radius < target_radius:
 		radius = min(target_radius, radius + (grow_velocity * delta))
@@ -51,5 +58,5 @@ func grow(delta):
 
 func _update_display():
 	%CollisionShape2D.shape.radius = radius
-	var r_scale = remap_range(radius, min_radius, max_radius, .1, 2)
+	var r_scale = remap(radius, min_radius, max_radius, .1, 2)
 	%Sprite2D.scale = Vector2(r_scale, r_scale)

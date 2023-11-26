@@ -5,10 +5,12 @@ extends Node2D
 @onready var score_label = %ScoreLabel
 
 var altitude: float
+var high_score: int
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	get_tree().paused = true
+	
 	%GameStartUI.show()
 	%GameOverUI.hide()
 	%PauseUI.hide()
@@ -18,6 +20,12 @@ func _ready():
 	%QuitButton.button_up.connect(_restart_game)
 	%ResumeButton.button_up.connect(_unpause_game)
 	%Character.player_death.connect(_on_game_over)
+	
+	load_high_score()
+	if high_score > 0:
+		%HighScoreLabel.text = "HIGH SCORE: %sm" % high_score
+	else:
+		%HighScoreLabel.hide()
 
 
 func _start_game():
@@ -38,6 +46,11 @@ func _unpause_game():
 
 func _on_game_over():
 	%GameOverLabel.text = "Final Altitude: %sm" % floor(altitude)
+	
+	if altitude >= high_score:
+		%GameOverLabel.text = "NEW HIGH SCORE!\n" + %GameOverLabel.text
+		save_high_score(altitude)
+
 	%GameOverUI.show()
 	get_tree().paused = true
 	
@@ -52,3 +65,22 @@ func _process(delta):
 	
 	if (Input.is_action_just_pressed("pause")):
 		_pause_game()
+
+
+func save_high_score(score):
+	if score > high_score:
+		var save_file = FileAccess.open("user://savegame.save", FileAccess.WRITE)
+		save_file.store_line(str(score))
+		save_file.close()
+		high_score = score
+	
+
+func load_high_score():
+	if not FileAccess.file_exists("user://savegame.save"):
+		high_score = 0
+		return # Error! We don't have a save to load.
+
+	var save_file = FileAccess.open("user://savegame.save", FileAccess.READ)
+	high_score = int(save_file.get_line())
+	save_file.close()
+

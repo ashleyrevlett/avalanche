@@ -378,6 +378,7 @@ spawner_scene = ExtResource("5_akxtr")
 [node name="GameOverUI" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
 process_mode = 3
+visible = false
 
 [node name="PanelContainer" type="PanelContainer" parent="GameOverUI"]
 anchors_preset = 8
@@ -432,7 +433,6 @@ text = "Restart"
 [node name="GameStartUI" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
 process_mode = 3
-visible = false
 
 [node name="PanelContainer" type="PanelContainer" parent="GameStartUI"]
 anchors_preset = 8
@@ -490,6 +490,19 @@ Pause: Esc"
 horizontal_alignment = 1
 
 [node name="Control3" type="Control" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 10)
+layout_mode = 2
+
+[node name="HighScoreLabel" type="Label" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("14_dmtj7")
+theme_override_fonts/font = ExtResource("12_j5djg")
+theme_override_font_sizes/font_size = 21
+text = "High Score: "
+horizontal_alignment = 1
+
+[node name="Control4" type="Control" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(2.08165e-12, 10)
 layout_mode = 2
 

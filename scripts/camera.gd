@@ -7,9 +7,12 @@ extends Camera2D
 
 @export var move_speed = 0.5  # camera position lerp speed
 @export var zoom_speed = 0.15  # camera zoom lerp speed
-@export var min_zoom = 0.3  # camera won't zoom farther than this
-@export var max_zoom = 0.7  # camera won't zoom closer than this
-@export var margin = Vector2(400, 400)  # include some buffer area around targets
+
+# zoom : bigger numbers == zoom closer in
+@export var min_zoom = 0.5  # camera won't zoom farther away than this
+@export var max_zoom = 0.8 #  camera won't zoom closer than this 
+
+@export var margin = Vector2(400, 300)  # include some buffer area around targets
 
 var last_position: Vector2
 
@@ -31,20 +34,29 @@ func _process(delta):
 	var query = PhysicsRayQueryParameters2D.create(player_pos, ray_to, ground_mask)
 	var result = space_state.intersect_ray(query)
 	if result :
+		# set zoom to try to see ground and player
 		var ground_pos = result.position # in world space		
-		var midpoint_y = (ground_pos.y + margin.y/4 + player_pos.y - margin.y) * .5
+		var zoom_factor_y = camera_rect.size.y / abs((player_pos.y - margin.y) - (ground_pos.y + margin.y * 2))
+		var zoom_factor = clamp(zoom_factor_y, min_zoom, max_zoom)
+		#var zoom_factor = min(max_zoom, max(min_zoom, zoom_factor_y))
+		zoom = lerp(self.zoom, Vector2.ONE * zoom_factor, zoom_speed)
+		print("zoom_factor: ", zoom_factor, " : ", zoom_factor_y)
 		
+		# figure out where to position camera	
+		var midpoint_y = (ground_pos.y + margin.y/4 + player_pos.y - margin.y) * .5
 		var new_pos = Vector2(player_pos.x, midpoint_y)
+				
+		# if player is too far from ground, just focus on player
+		if zoom_factor == min_zoom:
+			print("focusing on player only")
+			new_pos.y = player_pos.y
+
 		# don't allow backwards movement
 		if (player_pos.x < last_position.x):
 			new_pos.x = last_position.x
 			
 		global_position = lerp(global_position, new_pos, move_speed)
-			
-		var zoom_factor_y = camera_rect.size.y / abs(player_pos.y - ground_pos.y)
-		var zoom_factor = min(max_zoom, max(min_zoom, zoom_factor_y))
 
-		zoom = lerp(self.zoom, Vector2.ONE * zoom_factor, zoom_speed)
 	
 	# if zoom has changed so will rect
 	camera_rect = _get_camera_rect()

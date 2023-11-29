@@ -1,7 +1,8 @@
 extends Node2D
 
-@export var angle: float = 5
+@export var angle: float = 3
 @export var max_angle: float = 15
+@export var rotation_speed: float = 1
 @export var ground_scene: PackedScene
 @export var spawner_scene: PackedScene
 
@@ -14,7 +15,8 @@ var spawner_objects = []
 
 
 func _ready():
-	rotation_degrees = -10
+	rotation_degrees = -angle
+	
 	for x in range(1, 8):
 		_spawn_ground()
 	
@@ -65,12 +67,12 @@ func _process(delta):
 			_spawn_ground()
 	
 		var last_pos = ground_objects[-1].global_position
-		var a = floor(last_pos.y / 400)
-		var new_angle = clamp(a, -max_angle, -angle) - angle
+		var a = floor(last_pos.x / 1500)
+		var new_angle = -clamp(a, angle, max_angle)
 		var new_rad = deg_to_rad(new_angle)
 		#print("a: ", int(a), " : ", new_angle, " : ", new_rad)
 		if new_rad != rotation:
-			var new_rot = lerp_angle(rotation, new_rad, 2 * delta)
+			var new_rot = lerp_angle(rotation, new_rad, rotation_speed * delta)
 			rotation = new_rot
 		
 	# once a spawner appears on screen, remove it and add a new one

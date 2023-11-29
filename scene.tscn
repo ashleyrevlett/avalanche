@@ -720,7 +720,6 @@ text = "Altitude: 0"
 
 [node name="PlayerPos" type="Label" parent="ScoreUI/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

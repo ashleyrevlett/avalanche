@@ -27,7 +27,7 @@ var time_offscreen_til_death = 1 # sec
 
 var bodies_on_head = []
 var time_elapsed_crushed = 0
-var time_crushed_til_death = .5 # sec
+var time_crushed_til_death = .8 # sec
 
 
 func _ready():
@@ -75,6 +75,10 @@ func _detect_death(delta):
 	# detect player death by crushing
 	if (bodies_on_head.size() > 0 and on_ground):
 		#print("death by crushing")
+		
+		if not %DamageParticles.emitting:
+			%DamageParticles.emitting = true
+
 		time_elapsed_crushed += delta
 		var tween = get_tree().create_tween()
 		tween.tween_property($Sprite2D, "modulate", Color.RED, .1)
@@ -85,6 +89,8 @@ func _detect_death(delta):
 		time_elapsed_crushed = 0
 		$Sprite2D.self_modulate = 0xffffffff
 		%GoatAudio.stop()
+		if %DamageParticles.emitting:
+			%DamageParticles.emitting = false
 		
 	if time_elapsed_crushed > time_crushed_til_death:
 		player_death.emit()

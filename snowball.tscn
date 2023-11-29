@@ -1,18 +1,22 @@
-[gd_scene load_steps=4 format=3 uid="uid://frh3am2xj152"]
+[gd_scene load_steps=5 format=3 uid="uid://frh3am2xj152"]
 
 [ext_resource type="Script" path="res://scripts/snowball.gd" id="1_5ar2i"]
-[ext_resource type="Texture2D" uid="uid://g8khmiue3cfn" path="res://assets/snowball.png" id="2_a40ih"]
+[ext_resource type="Texture2D" uid="uid://ecfcqfxev4fj" path="res://assets/images/snowballs.png" id="2_sumh5"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_olbno"]
+friction = 0.8
+bounce = 0.15
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_aq5w8"]
 resource_local_to_scene = true
-radius = 50.0
+radius = 195.01
 
 [node name="Snowball" type="RigidBody2D" groups=["snowball"]]
 collision_layer = 2
 collision_mask = 7
 mass = 0.1
+physics_material_override = SubResource("PhysicsMaterial_olbno")
 script = ExtResource("1_5ar2i")
-grow_velocity = 30
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
@@ -22,6 +26,7 @@ debug_color = Color(1, 1, 1, 0.835294)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true
-texture = ExtResource("2_a40ih")
+texture = ExtResource("2_sumh5")
+hframes = 5
 
 [connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]

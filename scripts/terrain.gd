@@ -24,7 +24,7 @@ func _ready():
 
 func _spawn_spawner():
 	var instance = spawner_scene.instantiate()
-	var y_pos = 90
+	var y_pos = 0
 	if (spawner_objects.size() == 0):
 		instance.position = Vector2(camera.camera_rect.end.x, y_pos)
 		print(instance.position, ":", camera.camera_rect)

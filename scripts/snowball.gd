@@ -1,62 +1,58 @@
 extends RigidBody2D
 
-@export var grow_velocity = 60
-@export var min_radius = 10.0
-@export var max_radius = 100.0
-@export var min_mass = 0.1
-@export var max_mass = 1.0
-
-var supersize: bool
+@onready var sprite: Sprite2D = %Sprite2D
 var radius: float
-var target_radius: float
 var camera: Camera2D
 
+enum Size {EXTRA_SMALL, SMALL, MEDIUM, LARGE, EXTRA_LARGE}
 
 func _ready():
 	camera = get_tree().get_first_node_in_group("camera")
+	# true random
+	#var r = Size.keys()[randi() % Size.keys().size()]
 	
-	# 50px is scale=1 for sprite
-	supersize = true if randf() < .05 else false
-	
-	if (supersize):
-		target_radius = max_radius * 2
-		#%Sprite2D.self_modulate = Color("ff0000")
+	var r: Size
+	match randi() % 10:
+		1,2,3: r = Size.EXTRA_SMALL
+		4,5,6: r = Size.SMALL
+		7,8: r = Size.MEDIUM
+		9: r = Size.LARGE
+		0: r = Size.EXTRA_LARGE
+		
+	print(r)
+	if r == Size.EXTRA_SMALL:
+		radius = 32 # 32 px wide
+		mass = 0.1
+		sprite.frame = 4
+	elif r == Size.SMALL:	
+		radius = 64
+		mass = .2
+		sprite.frame = 3
+	elif r == Size.MEDIUM:
+		radius = 132
+		mass = 0.4
+		sprite.frame = 2
+	elif r == Size.LARGE:
+		radius = 164
+		mass = 0.8
+		sprite.frame = 1
+	elif r == Size.EXTRA_LARGE:
+		radius = 194
+		mass = 1.2
+		sprite.frame = 0
 
-	else:
-		target_radius = randf_range(min_radius, max_radius)
-	
-	radius = 10.0 # starting size
-	
 	_update_display()
 
 
-
-func _physics_process(delta):
-	# if rolling down, grow snowball
-	#if (abs(linear_velocity.x) > grow_velocity):
-	grow(delta)
-	
-	# turn to color, make dangerous		
-	if (radius > max_radius and "supersize" not in get_groups()):
-		add_to_group("supersize")
-
-
 func _process(delta):
-	var left_frame_x = camera.camera_rect.position.x - camera.camera_rect.size.x / 2
+	pass
 	"""
+	var left_frame_x = camera.camera_rect.position.x - camera.camera_rect.size.x / 2
 	if (global_position.x + max_radius < left_frame_x):
 		print("removing snowball!")
 		queue_free()
 	"""
 
-func grow(delta):
-	if radius < target_radius:
-		radius = min(target_radius, radius + (grow_velocity * delta))
-		mass = radius / max_radius
-		_update_display()
-	
 
 func _update_display():
 	%CollisionShape2D.shape.radius = radius
-	var r_scale = remap(radius, min_radius, max_radius, .1, 2)
-	%Sprite2D.scale = Vector2(r_scale, r_scale)

@@ -32,17 +32,19 @@ func _ready():
 
 
 func _process(delta):
-	# start emission once spawner is within 1 frame's length of camera
+	# start emission once spawner is within a few frames' length of camera
 	var right_frame = camera.camera_rect.end 
-	var x_limit = right_frame.x + camera.camera_rect.size.x
-	if (global_position.x <= x_limit and global_position.x > right_frame.x and $EmitTimer.is_stopped()):
-		$EmitTimer.start()
-		$EndTimer.start()
+	var x_limit = right_frame.x + camera.camera_rect.size.x * 3
 	
-	# stop emission once spawner is onscreen
+	
+	# stop emission once spawner is almost onscreen
 	if (global_position.x <= right_frame.x and not $EmitTimer.is_stopped()):
 		$EmitTimer.stop()
 
+	elif (global_position.x <= x_limit and global_position.x > right_frame.x and $EmitTimer.is_stopped()):
+		$EmitTimer.start()
+		$EndTimer.start()
+	
 	# fyi, accessing global_position of a snowball here breaks physics
 
 

@@ -1,25 +1,24 @@
 extends RigidBody2D
 
 @onready var sprite: Sprite2D = %Sprite2D
-var radius: float
+var grow_speed: float = 100.0
+var start_radius: float = 1.0
+var radius: float # target size
 var camera: Camera2D
 
 enum Size {EXTRA_SMALL, SMALL, MEDIUM, LARGE, EXTRA_LARGE}
 
 func _ready():
 	camera = get_tree().get_first_node_in_group("camera")
-	# true random
-	#var r = Size.keys()[randi() % Size.keys().size()]
-	
+
 	var r: Size
-	match randi() % 10:
-		1,2,3: r = Size.EXTRA_SMALL
+	match randi() % 11:
+		0,1,2,3: r = Size.EXTRA_SMALL
 		4,5,6: r = Size.SMALL
 		7,8: r = Size.MEDIUM
 		9: r = Size.LARGE
-		0: r = Size.EXTRA_LARGE
+		10: r = Size.EXTRA_LARGE
 		
-	print(r)
 	if r == Size.EXTRA_SMALL:
 		radius = 32 # 32 px wide
 		mass = 0.1
@@ -40,19 +39,24 @@ func _ready():
 		radius = 194
 		mass = 1.2
 		sprite.frame = 0
-
-	_update_display()
+	
+	# set initial size
+	var scale_factor = start_radius / radius
+	%CollisionShape2D.shape.radius = start_radius
+	%Sprite2D.scale = Vector2(scale_factor, scale_factor)
 
 
 func _process(delta):
-	pass
-	"""
+	# grow until target radius is reached
+	if (%CollisionShape2D.shape.radius != radius):
+		var r = %CollisionShape2D.shape.radius
+		var new_radius = clamp(r + grow_speed * delta, start_radius, radius)
+		var scale_factor = new_radius / radius
+		%CollisionShape2D.shape.radius = new_radius
+		%Sprite2D.scale = Vector2(scale_factor, scale_factor)
+
+	# destroy snowball when it goes offscreen
 	var left_frame_x = camera.camera_rect.position.x - camera.camera_rect.size.x / 2
-	if (global_position.x + max_radius < left_frame_x):
-		print("removing snowball!")
+	if (global_position.x < left_frame_x - camera.camera_rect.size.x / 2):
 		queue_free()
-	"""
-
-
-func _update_display():
-	%CollisionShape2D.shape.radius = radius
+	

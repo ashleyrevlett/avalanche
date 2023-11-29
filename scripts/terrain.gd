@@ -1,7 +1,7 @@
 extends Node2D
 
 @export var angle: float = 5
-@export var max_angle: float = 20
+@export var max_angle: float = 15
 @export var ground_scene: PackedScene
 @export var spawner_scene: PackedScene
 
@@ -36,7 +36,6 @@ func _spawn_spawner():
 		instance.position = new_pos
 	add_child(instance)
 	spawner_objects.append(instance)
-	print("spawned at ", instance.position)
 	
 
 func _spawn_ground():

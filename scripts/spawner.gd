@@ -4,7 +4,7 @@ extends Node2D
 @onready var camera: Camera2D
 
 var square_scene: PackedScene = load("res://snowball.tscn")
-
+var emit_done = false
 
 func _ready():
 	camera = get_tree().get_first_node_in_group("camera")
@@ -46,6 +46,17 @@ func _process(delta):
 		$EndTimer.start()
 	
 	# fyi, accessing global_position of a snowball here breaks physics
+	if emit_done:
+		var has_snowballs = false
+		var children = get_children()
+		for child in children:
+			if child.is_in_group("snowball"):
+				has_snowballs = true
+				break
+		
+		if not has_snowballs:
+			#print("Destroying spawner")
+			queue_free()
 
 
 func _spawn():
@@ -56,3 +67,4 @@ func _spawn():
 
 func _on_end_timer_timeout():
 	$EmitTimer.stop()
+	emit_done = true

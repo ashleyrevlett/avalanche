@@ -29,7 +29,7 @@ func _spawn_spawner():
 	var y_pos = 0
 	if (spawner_objects.size() == 0):
 		instance.position = Vector2(camera.camera_rect.end.x, y_pos)
-		print(instance.position, ":", camera.camera_rect)
+		#print(instance.position, ":", camera.camera_rect)
 	else:
 		# position this spawner to the right of the last one, 
 		# plus approximately the camera frame's width

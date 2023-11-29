@@ -5,8 +5,8 @@ extends Camera2D
 
 @onready var player: CharacterBody2D
 
-@export var move_speed = 0.5  # camera position lerp speed
-@export var zoom_speed = 0.15  # camera zoom lerp speed
+@export var move_speed = 4  # camera position lerp speed
+@export var zoom_speed = 4  # camera zoom lerp speed
 
 # zoom : bigger numbers == zoom closer in
 @export var min_zoom = 0.5  # camera won't zoom farther away than this
@@ -39,23 +39,23 @@ func _process(delta):
 		var zoom_factor_y = camera_rect.size.y / abs((player_pos.y - margin.y) - (ground_pos.y + margin.y * 2))
 		var zoom_factor = clamp(zoom_factor_y, min_zoom, max_zoom)
 		#var zoom_factor = min(max_zoom, max(min_zoom, zoom_factor_y))
-		zoom = lerp(self.zoom, Vector2.ONE * zoom_factor, zoom_speed)
-		print("zoom_factor: ", zoom_factor, " : ", zoom_factor_y)
+		zoom = lerp(self.zoom, Vector2.ONE * zoom_factor, zoom_speed * delta)
+		#print("zoom_factor: ", zoom_factor, " : ", zoom_factor_y)
 		
 		# figure out where to position camera	
 		var midpoint_y = (ground_pos.y + margin.y/4 + player_pos.y - margin.y) * .5
 		var new_pos = Vector2(player_pos.x, midpoint_y)
 				
 		# if player is too far from ground, just focus on player
-		if zoom_factor == min_zoom:
-			print("focusing on player only")
-			new_pos.y = player_pos.y
+		if abs(ground_pos.y + margin.y - midpoint_y) > camera_rect.size.y - margin.y:
+			#print("focusing on player only")
+			new_pos.y = player_pos.y + margin.y
 
 		# don't allow backwards movement
-		if (player_pos.x < last_position.x):
-			new_pos.x = last_position.x
+		#if (player_pos.x < last_position.x):
+		#	new_pos.x = last_position.x
 			
-		global_position = lerp(global_position, new_pos, move_speed)
+		global_position = lerp(global_position, new_pos, move_speed * delta)
 
 	
 	# if zoom has changed so will rect

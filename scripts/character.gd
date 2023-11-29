@@ -77,9 +77,12 @@ func _detect_death(delta):
 		var tween = get_tree().create_tween()
 		tween.tween_property($Sprite2D, "modulate", Color.RED, .1)
 		tween.tween_property($Sprite2D, "modulate", Color.WHITE, .1)
+		if not %GoatAudio.playing:
+			%GoatAudio.play()
 	else: 
 		time_elapsed_crushed = 0
 		$Sprite2D.self_modulate = 0xffffffff
+		%GoatAudio.stop()
 		
 	if time_elapsed_crushed > time_crushed_til_death:
 		player_death.emit()
@@ -103,6 +106,7 @@ func _physics_process(delta):
 	velocity.y += gravity * delta
 	#print("jumps_since_ground: ", jumps_since_ground)
 	if (jumps_since_ground < 2 or grounds_under_player.size() > 0) and Input.is_action_just_pressed("jump"):
+		%JumpAudio.play()	
 		jumps_since_ground += 1
 		velocity.y = jump_speed
 	velocity.y = clamp(velocity.y, -max_velocity, max_velocity)

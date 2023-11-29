@@ -3,8 +3,9 @@
 [ext_resource type="FontFile" uid="uid://c8pwdusbkecma" path="res://assets/fonts/Rodetta-lgDvd.otf" id="1_5gv0d"]
 [ext_resource type="Texture2D" uid="uid://df6s4iw60q8xp" path="res://assets/ui/button_bg.png" id="2_c4a0u"]
 [ext_resource type="Texture2D" uid="uid://ei7n70j3q1fv" path="res://assets/ui/button_pressed_bg.png" id="2_u2y6h"]
-[ext_resource type="FontFile" uid="uid://bnl5v78xsxu8g" path="res://assets/fonts/MunroSmall.ttf" id="3_yjkxi"]
 [ext_resource type="Texture2D" uid="uid://bad5ykcksldxs" path="res://assets/ui/panel.png" id="4_2cgne"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3h8fy"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vrfye"]
 texture = ExtResource("2_u2y6h")
@@ -39,10 +40,14 @@ axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
 [resource]
-default_font = ExtResource("3_yjkxi")
 Button/colors/font_color = Color(0, 0, 0, 1)
+Button/colors/font_focus_color = Color(1, 0, 0, 1)
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+Button/colors/font_pressed_color = Color(1, 1, 1, 1)
 Button/font_sizes/font_size = 20
 Button/fonts/font = ExtResource("1_5gv0d")
+Button/styles/focus = SubResource("StyleBoxEmpty_3h8fy")
 Button/styles/hover = SubResource("StyleBoxTexture_vrfye")
 Button/styles/normal = SubResource("StyleBoxTexture_dhdst")
 Button/styles/pressed = SubResource("StyleBoxTexture_416mq")

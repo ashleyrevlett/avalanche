@@ -359,6 +359,7 @@ autoplay = "idle"
 [node name="Sprite2D" type="Sprite2D" parent="Character"]
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("6_cocbs")
+flip_h = true
 hframes = 4
 vframes = 4
 frame = 8
@@ -449,84 +450,120 @@ text = "Restart"
 unique_name_in_owner = true
 process_mode = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GameStartUI"]
+[node name="PanelContainer" type="PanelContainer" parent="GameStartUI"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -289.0
-offset_top = -220.0
-offset_right = 289.0
-offset_bottom = 220.0
+offset_left = -522.0
+offset_top = -266.5
+offset_right = 522.0
+offset_bottom = 266.5
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Intro" type="Label" parent="GameStartUI/VBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("14_i6g70")
-theme_override_font_sizes/font_size = 130
-text = "Avalanche Goat"
-horizontal_alignment = 1
-
-[node name="PanelContainer" type="PanelContainer" parent="GameStartUI/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
 theme = ExtResource("14_dmtj7")
 
-[node name="MarginContainer" type="MarginContainer" parent="GameStartUI/VBoxContainer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="GameStartUI/PanelContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 30
 theme_override_constants/margin_top = 30
 theme_override_constants/margin_right = 30
 theme_override_constants/margin_bottom = 30
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GameStartUI/VBoxContainer/PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GameStartUI/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Intro" type="Label" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("14_i6g70")
+theme_override_font_sizes/font_size = 130
+text = "Avalanche Goat"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Control" type="Control" parent="GameStartUI/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(2.08165e-12, 10)
-layout_mode = 2
-
-[node name="Controls" type="Label" parent="GameStartUI/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("14_i6g70")
-theme_override_font_sizes/font_size = 28
-text = "Move: WASD / Arrows
-Jump + Double Jump: Space
-Pause: Esc"
-horizontal_alignment = 1
-
-[node name="Control3" type="Control" parent="GameStartUI/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(2.08165e-12, 10)
-layout_mode = 2
-
-[node name="HighScoreLabel" type="Label" parent="GameStartUI/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="HighScoreLabel" type="Label" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("14_dmtj7")
-theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 30
 text = "High Score: "
 horizontal_alignment = 1
 
-[node name="Control4" type="Control" parent="GameStartUI/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Control" type="Control" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 20)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 40
+
+[node name="MarginContainer" type="MarginContainer" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Controls" type="Label" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("14_i6g70")
+theme_override_font_sizes/font_size = 26
+text = "KEYBOARD:
+Move: WASD or Arrows
+Jump + Double Jump: Space
+Pause: Esc"
+horizontal_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Controls2" type="Label" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/MarginContainer2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("14_i6g70")
+theme_override_font_sizes/font_size = 26
+text = "Controller:
+Move: D-Pad / Joystick
+Jump + Double Jump: X / A
+Pause: Start"
+horizontal_alignment = 1
+
+[node name="Control3" type="Control" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(2.08165e-12, 10)
 layout_mode = 2
 
-[node name="StartButton" type="Button" parent="GameStartUI/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Control4" type="Control" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 10)
+layout_mode = 2
+
+[node name="StartButton" type="Button" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("14_dmtj7")
 text = "Start"
 
-[node name="Control2" type="Control" parent="GameStartUI/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Control2" type="Control" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(2.08165e-12, 10)
 layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("14_dmtj7")
 
 [node name="PauseUI" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
@@ -612,6 +649,7 @@ text = "Altitude: 0"
 
 [node name="PlayerPos" type="Label" parent="ScoreUI/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 
 [connection signal="body_entered" from="Character/GroundDetector" to="Character" method="_on_ground_detector_body_entered"]

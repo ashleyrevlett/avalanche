@@ -1,6 +1,7 @@
 extends Camera2D
 
 @export var camera_rect: Rect2
+@export var altitude: float = 0 # y pos of ground below player
 
 
 @onready var player: CharacterBody2D
@@ -33,7 +34,8 @@ func _process(delta):
 	var player_pos = player.global_position
 	var query = PhysicsRayQueryParameters2D.create(player_pos, ray_to, ground_mask)
 	var result = space_state.intersect_ray(query)
-	if result :
+	if result:
+		altitude = result.position.y
 		# set zoom to try to see ground and player
 		var ground_pos = result.position # in world space		
 		var zoom_factor_y = camera_rect.size.y / abs((player_pos.y - margin.y) - (ground_pos.y + margin.y * 2))

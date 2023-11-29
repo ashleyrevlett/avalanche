@@ -45,7 +45,7 @@ func _process(delta):
 		$EmitTimer.start()
 		$EndTimer.start()
 	
-	# fyi, accessing global_position of a snowball here breaks physics
+	# destory spawner if it's done and all its child snowballs are done
 	if emit_done:
 		var has_snowballs = false
 		var children = get_children()
@@ -53,9 +53,9 @@ func _process(delta):
 			if child.is_in_group("snowball"):
 				has_snowballs = true
 				break
-		
+
 		if not has_snowballs:
-			#print("Destroying spawner")
+			print("Destroying spawner")
 			queue_free()
 
 

@@ -70,7 +70,7 @@ func _restart_game():
 
 func _process(delta):
 	if state == State.GAMEPLAY:
-		altitude = max(0, camera.position.y / 20 * -1)
+		altitude = max(0, camera.altitude / 20 * -1)
 		score_label.text = "Altitude: %sm" % floor(altitude)
 		
 		if (Input.is_action_just_pressed("pause")):

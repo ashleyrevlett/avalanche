@@ -32,8 +32,6 @@ var time_crushed_til_death = .5 # sec
 
 func _ready():
 	player_width = %CollisionShape2D.shape.get_rect().size.x
-	#player_width = %CollisionShape2D.shape.height # rotated 90 deg so use height for width
-	#player_width = %CollisionShape2D.shape.radius * 2
 
 
 func _update_animation():
@@ -41,6 +39,7 @@ func _update_animation():
 	var x_dir = Input.get_axis("left", "right")
 	
 	if not on_ground:
+		%SnowParticles.emitting = false
 		#print(on_ground, " ", velocity.y)
 		if (velocity.y < -jump_threshold):
 			state_machine.travel("jump_loop")
@@ -48,12 +47,15 @@ func _update_animation():
 			state_machine.travel("fall_loop")
 		else:
 			state_machine.travel("idle")
+		
 	else:
 		if x_dir != 0:
 			anim_tree.set("parameters/walk_right/blend_position", x_dir)
 			state_machine.travel("walk_right")
+			%SnowParticles.emitting = true
 		else:
 			state_machine.travel("idle")
+			%SnowParticles.emitting = false
 	
 	if (velocity.x < 0):
 		$Sprite2D.flip_h = true
@@ -106,9 +108,13 @@ func _physics_process(delta):
 	velocity.y += gravity * delta
 	#print("jumps_since_ground: ", jumps_since_ground)
 	if (jumps_since_ground < 2 or grounds_under_player.size() > 0) and Input.is_action_just_pressed("jump"):
+		if jumps_since_ground == 1:
+			%EffectParticles.emitting = true
+		
 		%JumpAudio.play()	
 		jumps_since_ground += 1
 		velocity.y = jump_speed
+		
 	velocity.y = clamp(velocity.y, -max_velocity, max_velocity)
 	
 	# apply physics

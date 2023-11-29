@@ -11,10 +11,6 @@ var high_score: int
 func _ready():
 	get_tree().paused = true
 	
-	%GameStartUI.show()
-	%GameOverUI.hide()
-	%PauseUI.hide()
-	
 	%StartButton.button_up.connect(_start_game)
 	%GameOverRestartButton.button_up.connect(_restart_game)
 	%QuitButton.button_up.connect(_restart_game)
@@ -29,9 +25,9 @@ func _ready():
 
 
 func _start_game():
-	print("Starting!")
-	%GameStartUI.hide()
 	get_tree().paused = false
+	%GameStartUI.hide()
+	%ScoreUI.show()
 
 
 func _pause_game():

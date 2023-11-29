@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://frh3am2xj152"]
 
 [ext_resource type="Script" path="res://scripts/snowball.gd" id="1_5ar2i"]
-[ext_resource type="Texture2D" uid="uid://ecfcqfxev4fj" path="res://assets/images/snowballs.png" id="2_sumh5"]
+[ext_resource type="Texture2D" uid="uid://ecfcqfxev4fj" path="res://assets/sprites/snowballs.png" id="2_sumh5"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_olbno"]
 friction = 0.8

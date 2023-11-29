@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://n8lq0ecw36s8"
-path="res://.godot/imported/goat-spritesheet.png-ed68ca67c3dc6b0127577de8a070e0cf.ctex"
+path="res://.godot/imported/goat-spritesheet.png-776fadec50c8376607d7c16a3a070c3b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/goat-spritesheet.png"
-dest_files=["res://.godot/imported/goat-spritesheet.png-ed68ca67c3dc6b0127577de8a070e0cf.ctex"]
+source_file="res://assets/sprites/goat-spritesheet.png"
+dest_files=["res://.godot/imported/goat-spritesheet.png-776fadec50c8376607d7c16a3a070c3b.ctex"]
 
 [params]
 

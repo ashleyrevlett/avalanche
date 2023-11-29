@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://1i0se866c1tg"]
+[gd_scene load_steps=45 format=3 uid="uid://1i0se866c1tg"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_8h2uv"]
 [ext_resource type="Script" path="res://scripts/character.gd" id="1_elf0q"]
@@ -8,13 +8,12 @@
 [ext_resource type="Script" path="res://scripts/camera.gd" id="3_s3w6k"]
 [ext_resource type="Texture2D" uid="uid://deqp7ksnh5l6u" path="res://assets/background/bg_2.png" id="4_b0lmn"]
 [ext_resource type="PackedScene" uid="uid://ckdduyp6itwn5" path="res://spawner.tscn" id="5_akxtr"]
-[ext_resource type="Texture2D" uid="uid://n8lq0ecw36s8" path="res://assets/goat-spritesheet.png" id="6_cocbs"]
+[ext_resource type="Texture2D" uid="uid://n8lq0ecw36s8" path="res://assets/sprites/goat-spritesheet.png" id="6_cocbs"]
 [ext_resource type="PackedScene" uid="uid://b8wcb1enfr6ee" path="res://ground.tscn" id="8_spv53"]
 [ext_resource type="Script" path="res://scripts/terrain.gd" id="8_tujsh"]
-[ext_resource type="Texture2D" uid="uid://bad5ykcksldxs" path="res://assets/panel.png" id="11_255rr"]
-[ext_resource type="FontFile" uid="uid://botujj2p7h2kq" path="res://assets/fonts/8BITWONDERNominal.ttf" id="12_j5djg"]
-[ext_resource type="FontFile" uid="uid://bnl5v78xsxu8g" path="res://assets/fonts/MunroSmall.ttf" id="13_df44p"]
-[ext_resource type="Theme" uid="uid://bg3tjxvqinco1" path="res://assets/new_theme.tres" id="14_dmtj7"]
+[ext_resource type="Texture2D" uid="uid://bad5ykcksldxs" path="res://assets/ui/panel.png" id="11_255rr"]
+[ext_resource type="Theme" uid="uid://bg3tjxvqinco1" path="res://assets/ui/new_theme.tres" id="14_dmtj7"]
+[ext_resource type="FontFile" uid="uid://c8pwdusbkecma" path="res://assets/fonts/Rodetta-lgDvd.otf" id="14_i6g70"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4ahip"]
 size = Vector2(46, 64)
@@ -322,6 +321,7 @@ script = ExtResource("3_s3w6k")
 
 [node name="Character" type="CharacterBody2D" parent="."]
 unique_name_in_owner = true
+position = Vector2(2.08165e-12, 70)
 collision_mask = 7
 floor_constant_speed = true
 floor_block_on_wall = false
@@ -410,10 +410,10 @@ theme = ExtResource("14_dmtj7")
 
 [node name="MarginContainer" type="MarginContainer" parent="GameOverUI/PanelContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 40
-theme_override_constants/margin_top = 40
-theme_override_constants/margin_right = 40
-theme_override_constants/margin_bottom = 40
+theme_override_constants/margin_left = 80
+theme_override_constants/margin_top = 80
+theme_override_constants/margin_right = 80
+theme_override_constants/margin_bottom = 80
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GameOverUI/PanelContainer/MarginContainer"]
 layout_mode = 2
@@ -421,8 +421,8 @@ theme_override_constants/separation = 20
 
 [node name="Label" type="Label" parent="GameOverUI/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("12_j5djg")
-theme_override_font_sizes/font_size = 60
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 72
 text = "GAME OVER"
 horizontal_alignment = 1
 
@@ -441,6 +441,7 @@ layout_mode = 2
 [node name="GameOverRestartButton" type="Button" parent="GameOverUI/PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 4
 theme = ExtResource("14_dmtj7")
 text = "Restart"
 
@@ -448,86 +449,82 @@ text = "Restart"
 unique_name_in_owner = true
 process_mode = 3
 
-[node name="PanelContainer" type="PanelContainer" parent="GameStartUI"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GameStartUI"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -289.0
+offset_top = -220.0
+offset_right = 289.0
+offset_bottom = 220.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_2d4bo")
 
-[node name="MarginContainer" type="MarginContainer" parent="GameStartUI/PanelContainer"]
+[node name="Intro" type="Label" parent="GameStartUI/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("14_i6g70")
+theme_override_font_sizes/font_size = 130
+text = "Avalanche Goat"
+horizontal_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="GameStartUI/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("14_dmtj7")
+
+[node name="MarginContainer" type="MarginContainer" parent="GameStartUI/VBoxContainer/PanelContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 30
 theme_override_constants/margin_top = 30
 theme_override_constants/margin_right = 30
 theme_override_constants/margin_bottom = 30
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GameStartUI/PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GameStartUI/VBoxContainer/PanelContainer/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Intro" type="Label" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("12_j5djg")
-theme_override_font_sizes/font_size = 48
-text = "Avalanche"
-horizontal_alignment = 1
-
-[node name="Intro2" type="Label" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("12_j5djg")
-theme_override_font_sizes/font_size = 25
-text = "Scale the Mountain"
-horizontal_alignment = 1
-
-[node name="Control" type="Control" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Control" type="Control" parent="GameStartUI/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(2.08165e-12, 10)
 layout_mode = 2
 
-[node name="Controls" type="Label" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Controls" type="Label" parent="GameStartUI/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("13_df44p")
+theme_override_fonts/font = ExtResource("14_i6g70")
 theme_override_font_sizes/font_size = 28
 text = "Move: WASD / Arrows
-Jump: Space
+Jump + Double Jump: Space
 Pause: Esc"
 horizontal_alignment = 1
 
-[node name="Control3" type="Control" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Control3" type="Control" parent="GameStartUI/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(2.08165e-12, 10)
 layout_mode = 2
 
-[node name="HighScoreLabel" type="Label" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="HighScoreLabel" type="Label" parent="GameStartUI/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("14_dmtj7")
-theme_override_fonts/font = ExtResource("12_j5djg")
-theme_override_font_sizes/font_size = 21
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 30
 text = "High Score: "
 horizontal_alignment = 1
 
-[node name="Control4" type="Control" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Control4" type="Control" parent="GameStartUI/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(2.08165e-12, 10)
 layout_mode = 2
 
-[node name="StartButton" type="Button" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="StartButton" type="Button" parent="GameStartUI/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("14_dmtj7")
 text = "Start"
 
-[node name="Control2" type="Control" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Control2" type="Control" parent="GameStartUI/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(2.08165e-12, 10)
 layout_mode = 2
 
@@ -542,29 +539,29 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -189.5
+offset_top = -160.5
+offset_right = 189.5
+offset_bottom = 160.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_2d4bo")
 
 [node name="MarginContainer" type="MarginContainer" parent="PauseUI/PanelContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 60
+theme_override_constants/margin_left = 100
 theme_override_constants/margin_top = 40
-theme_override_constants/margin_right = 60
+theme_override_constants/margin_right = 100
 theme_override_constants/margin_bottom = 40
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PauseUI/PanelContainer/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Intro" type="Label" parent="PauseUI/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="PauseLabel" type="Label" parent="PauseUI/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("12_j5djg")
+theme = ExtResource("14_dmtj7")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 48
 text = "Paused"
 horizontal_alignment = 1
@@ -594,6 +591,8 @@ custom_minimum_size = Vector2(2.08165e-12, 10)
 layout_mode = 2
 
 [node name="ScoreUI" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+visible = false
 
 [node name="MarginContainer" type="MarginContainer" parent="ScoreUI"]
 offset_right = 40.0
@@ -608,7 +607,7 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("14_dmtj7")
-theme_override_font_sizes/font_size = 48
+theme_override_font_sizes/font_size = 28
 text = "Altitude: 0"
 
 [node name="PlayerPos" type="Label" parent="ScoreUI/MarginContainer/VBoxContainer"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://1i0se866c1tg"]
+[gd_scene load_steps=59 format=3 uid="uid://1i0se866c1tg"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_8h2uv"]
 [ext_resource type="Script" path="res://scripts/character.gd" id="1_elf0q"]
@@ -22,6 +22,7 @@
 [ext_resource type="AudioStream" uid="uid://b01l0b4v6bjre" path="res://assets/audio/377309__mrthenoronha__piano-game-theme-loop.mp3" id="15_245i3"]
 [ext_resource type="Texture2D" uid="uid://d3slax7p0ewbg" path="res://assets/sprites/sun.png" id="19_aq5d1"]
 [ext_resource type="Script" path="res://scripts/sun.gd" id="20_ubo7t"]
+[ext_resource type="Script" path="res://scripts/music.gd" id="23_udcam"]
 
 [sub_resource type="Gradient" id="Gradient_lovku"]
 offsets = PackedFloat32Array(0.302857, 1)
@@ -271,6 +272,12 @@ size = Vector2(73, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vua0g"]
 size = Vector2(52.0135, 6.5)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sm1wg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3apqg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ffk7m"]
 
 [node name="Game" type="Node2D"]
 position = Vector2(0, -2)
@@ -668,20 +675,27 @@ Jump + Double Jump: X / A
 Pause: Start"
 horizontal_alignment = 1
 
-[node name="Control3" type="Control" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(2.08165e-12, 10)
-layout_mode = 2
-
-[node name="Control4" type="Control" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(2.08165e-12, 10)
-layout_mode = 2
-
 [node name="StartButton" type="Button" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("14_dmtj7")
 text = "Start"
+
+[node name="Control4" type="Control" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 10)
+layout_mode = 2
+
+[node name="SoundButtonStart" type="Button" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_sm1wg")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_3apqg")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_ffk7m")
+text = "Sound: On"
 
 [node name="Control2" type="Control" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(2.08165e-12, 10)
@@ -692,68 +706,6 @@ visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("14_dmtj7")
-
-[node name="PauseUI" type="CanvasLayer" parent="."]
-unique_name_in_owner = true
-process_mode = 3
-visible = false
-
-[node name="PanelContainer" type="PanelContainer" parent="PauseUI"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -189.5
-offset_top = -160.5
-offset_right = 189.5
-offset_bottom = 160.5
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("14_dmtj7")
-
-[node name="MarginContainer" type="MarginContainer" parent="PauseUI/PanelContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 100
-theme_override_constants/margin_top = 40
-theme_override_constants/margin_right = 100
-theme_override_constants/margin_bottom = 40
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PauseUI/PanelContainer/MarginContainer"]
-layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="PauseLabel" type="Label" parent="PauseUI/PanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("14_dmtj7")
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 48
-text = "Paused"
-horizontal_alignment = 1
-
-[node name="Control" type="Control" parent="PauseUI/PanelContainer/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(2.08165e-12, 30)
-layout_mode = 2
-
-[node name="ResumeButton" type="Button" parent="PauseUI/PanelContainer/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-theme = ExtResource("14_dmtj7")
-text = "Resume"
-
-[node name="Control3" type="Control" parent="PauseUI/PanelContainer/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(2.08165e-12, 20)
-layout_mode = 2
-
-[node name="QuitButton" type="Button" parent="PauseUI/PanelContainer/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-theme = ExtResource("14_dmtj7")
-text = "Quit"
-
-[node name="Control2" type="Control" parent="PauseUI/PanelContainer/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(2.08165e-12, 10)
-layout_mode = 2
 
 [node name="IntroUI" type="CanvasLayer" parent="."]
 
@@ -801,11 +753,78 @@ text = "Altitude: 0"
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="PauseUI" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+process_mode = 3
+visible = false
+
+[node name="PanelContainer" type="PanelContainer" parent="PauseUI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -189.5
+offset_top = -160.5
+offset_right = 189.5
+offset_bottom = 160.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("14_dmtj7")
+
+[node name="MarginContainer" type="MarginContainer" parent="PauseUI/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseUI/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="PauseLabel" type="Label" parent="PauseUI/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("14_dmtj7")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 48
+text = "Paused"
+horizontal_alignment = 1
+
+[node name="ResumeButton" type="Button" parent="PauseUI/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("14_dmtj7")
+text = "Resume"
+
+[node name="SoundButton" type="Button" parent="PauseUI/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("14_dmtj7")
+text = "Sound: On"
+
+[node name="MusicButton" type="Button" parent="PauseUI/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("14_dmtj7")
+text = "Music: On"
+
+[node name="QuitButton" type="Button" parent="PauseUI/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("14_dmtj7")
+text = "Quit"
+
+[node name="Control2" type="Control" parent="PauseUI/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 10)
+layout_mode = 2
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 process_mode = 3
 stream = ExtResource("15_245i3")
 volume_db = -15.0
 autoplay = true
+script = ExtResource("23_udcam")
 
 [connection signal="timeout" from="Camera2D/AvalancheEvent/AvalancheEmitTimer" to="Camera2D/AvalancheEvent" method="_on_avalanche_emit_timer_timeout"]
 [connection signal="timeout" from="Camera2D/AvalancheEvent/AvalancheDurationTimer" to="Camera2D/AvalancheEvent" method="_on_avalanche_duration_timer_timeout"]
@@ -815,3 +834,6 @@ autoplay = true
 [connection signal="screen_exited" from="Character/VisibleOnScreenNotifier2D" to="Character" method="_on_screen_exited"]
 [connection signal="body_entered" from="Character/HeadDetector" to="Character" method="_on_head_detector_body_entered"]
 [connection signal="body_exited" from="Character/HeadDetector" to="Character" method="_on_head_detector_body_exited"]
+[connection signal="button_up" from="GameStartUI/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/SoundButtonStart" to="MusicPlayer" method="_on_sound_button_start_button_up"]
+[connection signal="button_up" from="PauseUI/PanelContainer/MarginContainer/VBoxContainer/SoundButton" to="MusicPlayer" method="_on_sound_button_button_up"]
+[connection signal="button_up" from="PauseUI/PanelContainer/MarginContainer/VBoxContainer/MusicButton" to="MusicPlayer" method="_on_music_button_button_up"]

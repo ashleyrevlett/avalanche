@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 signal player_death
 
+@export var sound_enabled = true
 @export var speed = 1200
 @export var jump_speed = -1800
 @export var gravity = 4000
@@ -87,12 +88,13 @@ func _detect_death(delta):
 		var tween = get_tree().create_tween()
 		tween.tween_property($Sprite2D, "modulate", Color.RED, .1)
 		tween.tween_property($Sprite2D, "modulate", Color.WHITE, .1)
-		if not %GoatAudio.playing:
+		if sound_enabled and not %GoatAudio.playing:
 			%GoatAudio.play()
 	else: 
 		time_elapsed_crushed = 0
 		$Sprite2D.self_modulate = 0xffffffff
-		%GoatAudio.stop()
+		if sound_enabled:
+			%GoatAudio.stop()
 		if %DamageParticles.emitting:
 			%DamageParticles.emitting = false
 		
@@ -121,7 +123,8 @@ func _physics_process(delta):
 		if jumps_since_ground == 1:
 			%EffectParticles.emitting = true
 		
-		%JumpAudio.play()	
+		if sound_enabled:
+			%JumpAudio.play()	
 		jumps_since_ground += 1
 		velocity.y = jump_speed
 		

@@ -41,7 +41,6 @@ func _spawn_spawner():
 	
 
 func _spawn_ground():
-	print("spawning ground")
 	var instance = ground_scene.instantiate()
 	if (ground_objects.size() == 0):
 		ground_width = instance.width
@@ -100,6 +99,5 @@ func _process(delta):
 						has_snowballs = true
 						break
 				if not has_snowballs:
-					print("Destroying spawner")
 					spawner_objects.erase(s)
 					s.queue_free()

@@ -1,9 +1,10 @@
-[gd_scene load_steps=54 format=3 uid="uid://1i0se866c1tg"]
+[gd_scene load_steps=55 format=3 uid="uid://1i0se866c1tg"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_8h2uv"]
 [ext_resource type="Script" path="res://scripts/character.gd" id="1_elf0q"]
 [ext_resource type="Texture2D" uid="uid://biayk0d0mn2eo" path="res://assets/background/sky.png" id="2_kuxdw"]
 [ext_resource type="Texture2D" uid="uid://cjn13yrassxte" path="res://assets/background/bg_3.png" id="3_hxg7i"]
+[ext_resource type="Texture2D" uid="uid://ccxxrb8tf0l3" path="res://assets/background/sky_light.png" id="3_jea1i"]
 [ext_resource type="Texture2D" uid="uid://dqvlgflen1qku" path="res://assets/background/bg_1.png" id="3_n0ldm"]
 [ext_resource type="Script" path="res://scripts/camera.gd" id="3_s3w6k"]
 [ext_resource type="Texture2D" uid="uid://deqp7ksnh5l6u" path="res://assets/background/bg_2.png" id="4_b0lmn"]
@@ -294,6 +295,13 @@ unique_name_in_owner = true
 position = Vector2(0, -17)
 scale = Vector2(1, 0.618274)
 texture = ExtResource("2_kuxdw")
+centered = false
+
+[node name="SkyLight" type="Sprite2D" parent="ParallaxBackground/SkyParallaxLayer"]
+unique_name_in_owner = true
+position = Vector2(0, -17)
+scale = Vector2(1, 0.618274)
+texture = ExtResource("3_jea1i")
 centered = false
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
@@ -710,6 +718,28 @@ text = "Quit"
 [node name="Control2" type="Control" parent="PauseUI/PanelContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(2.08165e-12, 10)
 layout_mode = 2
+
+[node name="IntroUI" type="CanvasLayer" parent="."]
+
+[node name="IntroContainer" type="MarginContainer" parent="IntroUI"]
+unique_name_in_owner = true
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -366.5
+offset_top = -112.0
+offset_right = 366.5
+offset_bottom = -18.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="IntroUI/IntroContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("14_dmtj7")
+theme_override_colors/font_color = Color(0.921569, 0.341176, 0.219608, 1)
+theme_override_font_sizes/font_size = 72
+text = "Scale the Mountain!"
 
 [node name="ScoreUI" type="CanvasLayer" parent="."]
 unique_name_in_owner = true

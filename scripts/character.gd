@@ -32,6 +32,10 @@ var time_crushed_til_death = .8 # sec
 
 func _ready():
 	player_width = %CollisionShape2D.shape.get_rect().size.x
+	if Constants.DEBUG:
+		%PlayerPos.hide()
+	else:
+		%PlayerPos.show()
 
 
 func _update_animation():
@@ -131,11 +135,12 @@ func _physics_process(delta):
 
 
 func _process(delta):
-	%PlayerPos.text = "POS: (%s, %s)" % [int(global_position.x), int(global_position.y)]
-	%PlayerPos.text += "\nVEL: (%s, %s)" % [int(velocity.x), int(velocity.y)]
-	#%PlayerPos.text += "\non_ground: %s" % on_ground
-	%PlayerPos.text += "\nFPS: %d" % int(Engine.get_frames_per_second())
-	
+	if not Constants.DEBUG:
+		%PlayerPos.text = "POS: (%s, %s)" % [int(global_position.x), int(global_position.y)]
+		%PlayerPos.text += "\nVEL: (%s, %s)" % [int(velocity.x), int(velocity.y)]
+		#%PlayerPos.text += "\non_ground: %s" % on_ground
+		%PlayerPos.text += "\nFPS: %d" % int(Engine.get_frames_per_second())
+		
 
 
 func _on_ground_detector_body_entered(body):

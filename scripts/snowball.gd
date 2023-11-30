@@ -59,7 +59,6 @@ func _process(delta):
 			%Sprite2D.scale = Vector2(scale_factor, scale_factor)
 		else:
 			queue_free()
-			print("destroyed melted snowball")
 			return
 
 	# grow until target radius is reached

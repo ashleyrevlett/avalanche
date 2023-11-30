@@ -9,6 +9,9 @@ var square_scene: PackedScene = load("res://snowball.tscn")
 func _ready():
 	camera = get_tree().get_first_node_in_group("camera")
 	
+	if Constants.DEBUG:
+		$Sprite2D.show()
+		
 	# on each interval, spawn snowball
 	# emit speed gets faster the higher you go
 	var min_difficulty = 1
@@ -19,9 +22,9 @@ func _ready():
 	var difficulty_scale = abs(camera.camera_rect.position.y) / 1000
 	difficulty_scale = clampf(difficulty_scale, min_difficulty, max_difficulty)
 	var emit_speed = remap(difficulty_scale, min_difficulty, max_difficulty, max_emit_speed, min_emit_speed)
-	#print("emit_speed:", emit_speed, " // difficulty_scale:", difficulty_scale)
 	$EmitTimer.wait_time = emit_speed
 	$EmitTimer.timeout.connect(_spawn)
+	#print("emit_speed:", emit_speed, " // difficulty_scale:", difficulty_scale)
 	
 	# stop spawning after random duration passes
 	# duration is longer the higher you go
@@ -29,6 +32,7 @@ func _ready():
 	var duration = randi_range(.2, .5)
 	$EndTimer.wait_time = duration * difficulty_scale
 	$EndTimer.timeout.connect(_on_end_timer_timeout)
+	#print("endtimer wait_time:", $EndTimer.wait_time)
 
 
 func _process(delta):

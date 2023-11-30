@@ -11,6 +11,8 @@ enum State {TITLE, GAMEPLAY, PAUSE, GAMEOVER}
 var state: State
 
 var melting: bool = false
+var max_time_between_melts = 45
+var time_elapsed_since_melt = 0
 
 
 # Called when the node enters the scene tree for the first time.
@@ -23,6 +25,8 @@ func _ready():
 	%QuitButton.button_up.connect(_restart_game)
 	%ResumeButton.button_up.connect(_unpause_game)
 	%Character.player_death.connect(_on_game_over)
+	
+	%SkyLight.modulate.a = 0
 	
 	load_high_score()
 	if high_score > 0:
@@ -38,6 +42,17 @@ func _start_game():
 	get_tree().paused = false
 	%GameStartUI.hide()
 	%ScoreUI.show()
+	
+	await get_tree().create_timer(0.2).timeout
+	var intro = %IntroContainer
+	intro.show()
+	var tween = create_tween()
+	tween.tween_property(intro, "position:y", 150, 0.5).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+	tween.tween_property(intro, "position:y", 150, 1.5)
+	tween.tween_property(intro, "modulate:a", 0, 0.3)
+	await tween.finished
+	intro.hide()
+	
 
 
 func _pause_game():
@@ -80,10 +95,12 @@ func _process(delta):
 			_pause_game()
 			
 		if not melting:
+			time_elapsed_since_melt += delta
 			var snowball_count = get_tree().get_nodes_in_group("snowball").size()
-			print("SNOWBALLS: ", snowball_count)
-			if snowball_count > Constants.max_snowballs:
+			if snowball_count > Constants.MAX_SNOWBALLS or time_elapsed_since_melt > max_time_between_melts:
 				melt_event()
+			if Constants.DEBUG:
+				print("SNOWBALLS: ", snowball_count)
 
 
 func save_high_score(score):
@@ -106,19 +123,22 @@ func load_high_score():
 
 
 func melt_event():
-	print("melt_event:", melting)
+	if Constants.DEBUG:
+		print("melt_event:", melting)
 	if melting == true:
 		return
 	melting = true
+	time_elapsed_since_melt = 0
 	var duration = 4.0
 	%Sun.appear(duration)
 	var tween = create_tween()
-	tween.tween_property(%Sky, "self_modulate", Color('ffcdad'), duration/4).set_ease(Tween.EASE_OUT)
-	tween.tween_property(%Sky, "self_modulate", Color('ffcdad'), duration/2)
-	tween.tween_property(%Sky, "self_modulate", Color('ffffff'), duration/4).set_ease(Tween.EASE_IN)
+	tween.tween_property(%SkyLight, "modulate:a", 1, duration/4).set_ease(Tween.EASE_OUT)
+	tween.tween_property(%SkyLight, "modulate:a", 1, duration/2)
+	tween.tween_property(%SkyLight, "modulate:a", 0, duration/4).set_ease(Tween.EASE_IN)
 	tween.connect("finished", stop_melting)
-	print("tweens ran")
+
 	
 func stop_melting():
 	melting = false
-	print("stop melting!:", melting)
+	if Constants.DEBUG:
+		print("stop melting!:", melting)

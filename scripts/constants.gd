@@ -1,4 +1,4 @@
 extends Node
 
-var max_snowballs: int = 60
-
+const MAX_SNOWBALLS: int = 100
+const DEBUG = false

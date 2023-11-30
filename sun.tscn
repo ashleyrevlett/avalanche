@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bfmmxptikkq3b"]
+
+[ext_resource type="Texture2D" uid="uid://d3slax7p0ewbg" path="res://assets/sprites/sun.png" id="1_5edmm"]
+[ext_resource type="Script" path="res://scripts/sun.gd" id="2_dj4uh"]
+
+[node name="SunSprite2D" type="Sprite2D"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_5edmm")
+script = ExtResource("2_dj4uh")

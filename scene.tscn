@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://1i0se866c1tg"]
+[gd_scene load_steps=54 format=3 uid="uid://1i0se866c1tg"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_8h2uv"]
 [ext_resource type="Script" path="res://scripts/character.gd" id="1_elf0q"]
@@ -18,6 +18,8 @@
 [ext_resource type="Theme" uid="uid://bg3tjxvqinco1" path="res://assets/ui/new_theme.tres" id="14_dmtj7"]
 [ext_resource type="FontFile" uid="uid://c8pwdusbkecma" path="res://assets/fonts/Rodetta-lgDvd.otf" id="14_i6g70"]
 [ext_resource type="AudioStream" uid="uid://b01l0b4v6bjre" path="res://assets/audio/377309__mrthenoronha__piano-game-theme-loop.mp3" id="15_245i3"]
+[ext_resource type="Texture2D" uid="uid://d3slax7p0ewbg" path="res://assets/sprites/sun.png" id="19_aq5d1"]
+[ext_resource type="Script" path="res://scripts/sun.gd" id="20_ubo7t"]
 
 [sub_resource type="Gradient" id="Gradient_lovku"]
 offsets = PackedFloat32Array(0.302857, 1)
@@ -288,10 +290,21 @@ motion_scale = Vector2(2.08165e-12, 0.2)
 motion_mirroring = Vector2(1280, 2.08165e-12)
 
 [node name="Sky" type="Sprite2D" parent="ParallaxBackground/SkyParallaxLayer"]
+unique_name_in_owner = true
 position = Vector2(0, -17)
 scale = Vector2(1, 0.618274)
 texture = ExtResource("2_kuxdw")
 centered = false
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(2.08165e-12, 2.08165e-12)
+
+[node name="Sun" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+unique_name_in_owner = true
+position = Vector2(162, 124)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("19_aq5d1")
+script = ExtResource("20_ubo7t")
 
 [node name="ParallaxLayer4" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2(0.03, 2.08165e-12)

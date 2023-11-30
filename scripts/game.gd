@@ -10,6 +10,9 @@ var high_score: int
 enum State {TITLE, GAMEPLAY, PAUSE, GAMEOVER}
 var state: State
 
+var melting: bool = false
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():	
 	state = State.TITLE
@@ -75,6 +78,12 @@ func _process(delta):
 		
 		if (Input.is_action_just_pressed("pause")):
 			_pause_game()
+			
+		if not melting:
+			var snowball_count = get_tree().get_nodes_in_group("snowball").size()
+			print("SNOWBALLS: ", snowball_count)
+			if snowball_count > Constants.max_snowballs:
+				melt_event()
 
 
 func save_high_score(score):
@@ -94,3 +103,22 @@ func load_high_score():
 	high_score = int(save_file.get_line())
 	save_file.close()
 
+
+
+func melt_event():
+	print("melt_event:", melting)
+	if melting == true:
+		return
+	melting = true
+	var duration = 4.0
+	%Sun.appear(duration)
+	var tween = create_tween()
+	tween.tween_property(%Sky, "self_modulate", Color('ffcdad'), duration/4).set_ease(Tween.EASE_OUT)
+	tween.tween_property(%Sky, "self_modulate", Color('ffcdad'), duration/2)
+	tween.tween_property(%Sky, "self_modulate", Color('ffffff'), duration/4).set_ease(Tween.EASE_IN)
+	tween.connect("finished", stop_melting)
+	print("tweens ran")
+	
+func stop_melting():
+	melting = false
+	print("stop melting!:", melting)

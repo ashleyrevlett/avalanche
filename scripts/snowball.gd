@@ -1,10 +1,12 @@
 extends RigidBody2D
 
 @onready var sprite: Sprite2D = %Sprite2D
-var grow_speed: float = 100.0
+var grow_speed: float = 80.0
+var melt_speed: float = 120.0
 var start_radius: float = 1.0
 var radius: float # target size
 var camera: Camera2D
+var melting: bool = false
 
 enum Size {EXTRA_SMALL, SMALL, MEDIUM, LARGE, EXTRA_LARGE}
 
@@ -47,11 +49,23 @@ func _ready():
 
 
 func _process(delta):
+	var r = %CollisionShape2D.shape.radius
+	
+	if melting:
+		if r > 0.2:
+			var new_radius = max(0.1, r - melt_speed * delta)
+			var scale_factor = abs(new_radius / radius)
+			%CollisionShape2D.shape.radius = new_radius
+			%Sprite2D.scale = Vector2(scale_factor, scale_factor)
+		else:
+			queue_free()
+			print("destroyed melted snowball")
+			return
+
 	# grow until target radius is reached
-	if (%CollisionShape2D.shape.radius != radius):
-		var r = %CollisionShape2D.shape.radius
+	elif (r != radius):
 		var new_radius = clamp(r + grow_speed * delta, start_radius, radius)
-		var scale_factor = new_radius / radius
+		var scale_factor = abs(new_radius / radius)
 		%CollisionShape2D.shape.radius = new_radius
 		%Sprite2D.scale = Vector2(scale_factor, scale_factor)
 
@@ -60,3 +74,6 @@ func _process(delta):
 	if (global_position.x < left_frame_x - camera.camera_rect.size.x / 2):
 		queue_free()
 	
+
+func melt():
+	melting = true

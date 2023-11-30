@@ -66,6 +66,14 @@ func _process(delta):
 		if (last_pos.x + ground_width/2 < camera.camera_rect.position.x + frame_dist):
 			_spawn_ground()
 			
+		# if first ground is very far, remove it
+		var first_pos = ground_objects[0].global_position
+		if first_pos != last_pos:
+			if (first_pos.x + ground_width/2 < camera.camera_rect.position.x - frame_dist * 2):
+				ground_objects[0].queue_free()
+				ground_objects.remove_at(0)
+
+		# set angle based on altitude
 		var a = floor(last_pos.x / 1500)
 		var new_angle = -clamp(a, angle, max_angle)
 		var new_rad = deg_to_rad(new_angle)
@@ -74,10 +82,24 @@ func _process(delta):
 			var new_rot = lerp_angle(rotation, new_rad, rotation_speed * delta)
 			rotation = new_rot
 		
-	# once a spawner appears on screen, add a new one behind it
-	# it will destory itself when it's ready
+
 	if (spawner_objects.size() > 0):
+		# once a spawner appears on screen, add a new one behind it
 		var first_pos = spawner_objects[0].global_position
 		if (first_pos.x < camera.camera_rect.end.x):
-			var instance = spawner_objects.pop_front()
+			#var instance = spawner_objects.pop_front()
 			_spawn_spawner()
+			
+		# see if any spawners can be destroyed
+		for s in spawner_objects:
+			if s.emit_done:
+				var has_snowballs = false
+				var children = s.get_children()
+				for child in children:
+					if child.is_in_group("snowball"):
+						has_snowballs = true
+						break
+				if not has_snowballs:
+					print("Destroying spawner")
+					spawner_objects.erase(s)
+					s.queue_free()

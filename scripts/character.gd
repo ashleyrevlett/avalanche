@@ -135,10 +135,10 @@ func _physics_process(delta):
 
 
 func _process(delta):
-	if not Constants.DEBUG:
+	if Constants.DEBUG:
 		%PlayerPos.text = "POS: (%s, %s)" % [int(global_position.x), int(global_position.y)]
 		%PlayerPos.text += "\nVEL: (%s, %s)" % [int(velocity.x), int(velocity.y)]
-		#%PlayerPos.text += "\non_ground: %s" % on_ground
+		%PlayerPos.text += "\non_ground: %s" % on_ground
 		%PlayerPos.text += "\nFPS: %d" % int(Engine.get_frames_per_second())
 		
 

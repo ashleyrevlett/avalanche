@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_8h2uv"]
 [ext_resource type="Script" path="res://scripts/character.gd" id="1_elf0q"]
-[ext_resource type="Texture2D" uid="uid://biayk0d0mn2eo" path="res://assets/background/sky.png" id="2_kuxdw"]
+[ext_resource type="Texture2D" uid="uid://dk4tpc3ttgmvr" path="res://assets/background/sky.jpg" id="2_2w00b"]
+[ext_resource type="Texture2D" uid="uid://bjoywlblecjik" path="res://assets/background/sky_light.jpg" id="3_8k4r3"]
 [ext_resource type="Texture2D" uid="uid://cjn13yrassxte" path="res://assets/background/bg_3.png" id="3_hxg7i"]
-[ext_resource type="Texture2D" uid="uid://ccxxrb8tf0l3" path="res://assets/background/sky_light.png" id="3_jea1i"]
 [ext_resource type="Texture2D" uid="uid://dqvlgflen1qku" path="res://assets/background/bg_1.png" id="3_n0ldm"]
 [ext_resource type="Script" path="res://scripts/camera.gd" id="3_s3w6k"]
 [ext_resource type="Texture2D" uid="uid://deqp7ksnh5l6u" path="res://assets/background/bg_2.png" id="4_b0lmn"]
@@ -17,7 +17,6 @@
 [ext_resource type="AudioStream" uid="uid://c8i3aicr2qhvg" path="res://assets/audio/689407__saha213131__goat.mp3" id="10_5vt0m"]
 [ext_resource type="Script" path="res://scripts/avalanche_event.gd" id="10_op0mp"]
 [ext_resource type="PackedScene" uid="uid://mymenr8v2cn3" path="res://spawn_marker.tscn" id="11_5lgqo"]
-[ext_resource type="Texture2D" uid="uid://bad5ykcksldxs" path="res://assets/ui/panel.png" id="11_255rr"]
 [ext_resource type="Theme" uid="uid://bg3tjxvqinco1" path="res://assets/ui/new_theme.tres" id="14_dmtj7"]
 [ext_resource type="FontFile" uid="uid://c8pwdusbkecma" path="res://assets/fonts/Rodetta-lgDvd.otf" id="14_i6g70"]
 [ext_resource type="AudioStream" uid="uid://b01l0b4v6bjre" path="res://assets/audio/377309__mrthenoronha__piano-game-theme-loop.mp3" id="15_245i3"]
@@ -273,8 +272,10 @@ size = Vector2(73, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vua0g"]
 size = Vector2(52.0135, 6.5)
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_8idck"]
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2d4bo"]
-texture = ExtResource("11_255rr")
+texture = SubResource("CompressedTexture2D_8idck")
 texture_margin_left = 8.0
 texture_margin_top = 8.0
 texture_margin_right = 8.0
@@ -296,14 +297,14 @@ motion_mirroring = Vector2(1280, 2.08165e-12)
 unique_name_in_owner = true
 position = Vector2(0, -17)
 scale = Vector2(1, 0.618274)
-texture = ExtResource("2_kuxdw")
+texture = ExtResource("2_2w00b")
 centered = false
 
 [node name="SkyLight" type="Sprite2D" parent="ParallaxBackground/SkyParallaxLayer"]
 unique_name_in_owner = true
 position = Vector2(0, -17)
 scale = Vector2(1, 0.618274)
-texture = ExtResource("3_jea1i")
+texture = ExtResource("3_8k4r3")
 centered = false
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
@@ -311,7 +312,7 @@ motion_scale = Vector2(2.08165e-12, 2.08165e-12)
 
 [node name="Sun" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
 unique_name_in_owner = true
-position = Vector2(162, 124)
+position = Vector2(443, 124)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("19_aq5d1")
 script = ExtResource("20_ubo7t")
@@ -631,13 +632,21 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="Controls" type="Label" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Keyboard"
+horizontal_alignment = 1
+
+[node name="Controls" type="Label" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("14_i6g70")
 theme_override_font_sizes/font_size = 26
-text = "KEYBOARD:
-Move: WASD or Arrows
+text = "Left/Right: A / aD or Arrows
 Jump + Double Jump: Space
 Pause: Esc"
 horizontal_alignment = 1
@@ -649,13 +658,21 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="Controls2" type="Label" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/MarginContainer2"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/MarginContainer2"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Controller"
+horizontal_alignment = 1
+
+[node name="Controls2" type="Label" parent="GameStartUI/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/MarginContainer2/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("14_i6g70")
 theme_override_font_sizes/font_size = 26
-text = "Controller:
-Move: D-Pad / Joystick
+text = "Move: D-Pad or Joystick
 Jump + Double Jump: X / A
 Pause: Start"
 horizontal_alignment = 1

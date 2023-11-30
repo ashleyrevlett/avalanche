@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://b8wcb1enfr6ee"]
 
 [ext_resource type="Script" path="res://scripts/ground.gd" id="1_05p53"]
-[ext_resource type="Texture2D" uid="uid://bd52ccnuabh2u" path="res://assets/sprites/ground.png" id="2_ieuhn"]
+[ext_resource type="Texture2D" uid="uid://cg6fasd2et41r" path="res://assets/sprites/ground.jpg" id="2_dnv7y"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_n7eoa"]
 friction = 0.1
@@ -33,6 +33,6 @@ offset_right = 500.0
 offset_bottom = 500.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_ieuhn")
+texture = ExtResource("2_dnv7y")
 expand_mode = 1
 stretch_mode = 1

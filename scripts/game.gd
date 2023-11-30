@@ -99,8 +99,8 @@ func _process(delta):
 			var snowball_count = get_tree().get_nodes_in_group("snowball").size()
 			if snowball_count > Constants.MAX_SNOWBALLS or time_elapsed_since_melt > max_time_between_melts:
 				melt_event()
-			if Constants.DEBUG:
-				print("SNOWBALLS: ", snowball_count)
+			#if Constants.DEBUG:
+			#	print("SNOWBALLS: ", snowball_count)
 
 
 func save_high_score(score):
@@ -123,8 +123,8 @@ func load_high_score():
 
 
 func melt_event():
-	if Constants.DEBUG:
-		print("melt_event:", melting)
+	#if Constants.DEBUG:
+	#	print("melt_event:", melting)
 	if melting == true:
 		return
 	melting = true
@@ -140,8 +140,8 @@ func melt_event():
 
 func stop_melting():
 	melting = false
-	if Constants.DEBUG:
-		print("stop melting!:", melting)
+	#if Constants.DEBUG:
+	#	print("stop melting!:", melting)
 	
 	await get_tree().create_timer(1.0).timeout
 	%AvalancheEvent.start()

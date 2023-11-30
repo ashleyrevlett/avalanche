@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://1i0se866c1tg"]
+[gd_scene load_steps=55 format=3 uid="uid://1i0se866c1tg"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_8h2uv"]
 [ext_resource type="Script" path="res://scripts/character.gd" id="1_elf0q"]
@@ -271,15 +271,6 @@ size = Vector2(73, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vua0g"]
 size = Vector2(52.0135, 6.5)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_8idck"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2d4bo"]
-texture = SubResource("CompressedTexture2D_8idck")
-texture_margin_left = 8.0
-texture_margin_top = 8.0
-texture_margin_right = 8.0
-texture_margin_bottom = 8.0
 
 [node name="Game" type="Node2D"]
 position = Vector2(0, -2)
@@ -719,7 +710,7 @@ offset_right = 189.5
 offset_bottom = 160.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_2d4bo")
+theme = ExtResource("14_dmtj7")
 
 [node name="MarginContainer" type="MarginContainer" parent="PauseUI/PanelContainer"]
 layout_mode = 2

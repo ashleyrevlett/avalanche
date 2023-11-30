@@ -19,10 +19,11 @@ func _on_avalanche_emit_timer_timeout():
 		await get_tree().create_timer(wait_time).timeout
 		var instance = snowball_scene.instantiate()
 		instance.position = s.position
-		instance.modulate = Color('f2cee3')
+		instance.modulate = Color('89b8f0')
 		instance.avalanche = true
 		add_child(instance)
 
 
 func _on_avalanche_duration_timer_timeout():
 	$AvalancheEmitTimer.stop()
+

@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Gd 4 Physicsdemo"
+config/name="Avalanche Goat"
 run/main_scene="res://scene.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"

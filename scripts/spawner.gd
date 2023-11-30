@@ -29,7 +29,7 @@ func _ready():
 	# stop spawning after random duration passes
 	# duration is longer the higher you go
 	# will also stop automatically when in frame
-	var duration = randi_range(.2, .5)
+	var duration = randf_range(1, 2)
 	$EndTimer.wait_time = duration * difficulty_scale
 	$EndTimer.timeout.connect(_on_end_timer_timeout)
 	#print("endtimer wait_time:", $EndTimer.wait_time)

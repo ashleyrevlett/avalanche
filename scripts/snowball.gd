@@ -1,5 +1,7 @@
 extends RigidBody2D
 
+@export var avalanche: bool = false
+
 @onready var sprite: Sprite2D = %Sprite2D
 var grow_speed: float = 80.0
 var melt_speed: float = 120.0
@@ -14,12 +16,18 @@ func _ready():
 	camera = get_tree().get_first_node_in_group("camera")
 
 	var r: Size
-	match randi() % 11:
-		0,1,2,3: r = Size.EXTRA_SMALL
-		4,5,6: r = Size.SMALL
-		7,8: r = Size.MEDIUM
-		9: r = Size.LARGE
-		10: r = Size.EXTRA_LARGE
+	
+	if avalanche:
+		match randi() % 7:
+			0,1,2,3: r = Size.EXTRA_SMALL
+			4,5,6: r = Size.SMALL
+	else:
+		match randi() % 11:
+			0,1,2,3: r = Size.EXTRA_SMALL
+			4,5,6: r = Size.SMALL
+			7,8: r = Size.MEDIUM
+			9: r = Size.LARGE
+			10: r = Size.EXTRA_LARGE
 		
 	if r == Size.EXTRA_SMALL:
 		radius = 32 # 32 px wide

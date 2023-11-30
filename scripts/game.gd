@@ -11,7 +11,7 @@ enum State {TITLE, GAMEPLAY, PAUSE, GAMEOVER}
 var state: State
 
 var melting: bool = false
-var max_time_between_melts = 45
+var max_time_between_melts = 30
 var time_elapsed_since_melt = 0
 
 
@@ -137,8 +137,12 @@ func melt_event():
 	tween.tween_property(%SkyLight, "modulate:a", 0, duration/4).set_ease(Tween.EASE_IN)
 	tween.connect("finished", stop_melting)
 
-	
+
 func stop_melting():
 	melting = false
 	if Constants.DEBUG:
 		print("stop melting!:", melting)
+	
+	await get_tree().create_timer(1.0).timeout
+	%AvalancheEvent.start()
+	

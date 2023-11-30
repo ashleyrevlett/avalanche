@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://1i0se866c1tg"]
+[gd_scene load_steps=57 format=3 uid="uid://1i0se866c1tg"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_8h2uv"]
 [ext_resource type="Script" path="res://scripts/character.gd" id="1_elf0q"]
@@ -15,6 +15,8 @@
 [ext_resource type="Script" path="res://scripts/terrain.gd" id="8_tujsh"]
 [ext_resource type="AudioStream" uid="uid://cvoxetqj6ee70" path="res://assets/audio/187025__lloydevans09__jump1.wav" id="9_x6a8f"]
 [ext_resource type="AudioStream" uid="uid://c8i3aicr2qhvg" path="res://assets/audio/689407__saha213131__goat.mp3" id="10_5vt0m"]
+[ext_resource type="Script" path="res://scripts/avalanche_event.gd" id="10_op0mp"]
+[ext_resource type="PackedScene" uid="uid://mymenr8v2cn3" path="res://spawn_marker.tscn" id="11_5lgqo"]
 [ext_resource type="Texture2D" uid="uid://bad5ykcksldxs" path="res://assets/ui/panel.png" id="11_255rr"]
 [ext_resource type="Theme" uid="uid://bg3tjxvqinco1" path="res://assets/ui/new_theme.tres" id="14_dmtj7"]
 [ext_resource type="FontFile" uid="uid://c8pwdusbkecma" path="res://assets/fonts/Rodetta-lgDvd.otf" id="14_i6g70"]
@@ -354,6 +356,32 @@ drag_bottom_margin = 0.0
 editor_draw_limits = true
 editor_draw_drag_margin = true
 script = ExtResource("3_s3w6k")
+
+[node name="AvalancheEvent" type="Node2D" parent="Camera2D"]
+unique_name_in_owner = true
+position = Vector2(-2.08165e-12, -292.805)
+script = ExtResource("10_op0mp")
+
+[node name="SpawnMarker5" parent="Camera2D/AvalancheEvent" instance=ExtResource("11_5lgqo")]
+position = Vector2(-760, -283)
+
+[node name="SpawnMarker4" parent="Camera2D/AvalancheEvent" instance=ExtResource("11_5lgqo")]
+position = Vector2(-373, -283)
+
+[node name="SpawnMarker" parent="Camera2D/AvalancheEvent" instance=ExtResource("11_5lgqo")]
+position = Vector2(-3, -283)
+
+[node name="SpawnMarker2" parent="Camera2D/AvalancheEvent" instance=ExtResource("11_5lgqo")]
+position = Vector2(389, -283)
+
+[node name="SpawnMarker3" parent="Camera2D/AvalancheEvent" instance=ExtResource("11_5lgqo")]
+position = Vector2(787, -283)
+
+[node name="AvalancheEmitTimer" type="Timer" parent="Camera2D/AvalancheEvent"]
+wait_time = 0.5
+
+[node name="AvalancheDurationTimer" type="Timer" parent="Camera2D/AvalancheEvent"]
+wait_time = 3.0
 
 [node name="Character" type="CharacterBody2D" parent="."]
 unique_name_in_owner = true
@@ -771,6 +799,8 @@ stream = ExtResource("15_245i3")
 volume_db = -15.0
 autoplay = true
 
+[connection signal="timeout" from="Camera2D/AvalancheEvent/AvalancheEmitTimer" to="Camera2D/AvalancheEvent" method="_on_avalanche_emit_timer_timeout"]
+[connection signal="timeout" from="Camera2D/AvalancheEvent/AvalancheDurationTimer" to="Camera2D/AvalancheEvent" method="_on_avalanche_duration_timer_timeout"]
 [connection signal="body_entered" from="Character/GroundDetector" to="Character" method="_on_ground_detector_body_entered"]
 [connection signal="body_exited" from="Character/GroundDetector" to="Character" method="_on_ground_detector_body_exited"]
 [connection signal="screen_entered" from="Character/VisibleOnScreenNotifier2D" to="Character" method="_on_screen_entered"]

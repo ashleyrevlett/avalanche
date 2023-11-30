@@ -33,9 +33,9 @@ var time_crushed_til_death = .8 # sec
 func _ready():
 	player_width = %CollisionShape2D.shape.get_rect().size.x
 	if Constants.DEBUG:
-		%PlayerPos.hide()
-	else:
 		%PlayerPos.show()
+	else:
+		%PlayerPos.hide()
 
 
 func _update_animation():

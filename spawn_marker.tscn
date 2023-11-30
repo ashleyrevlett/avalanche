@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://mymenr8v2cn3"]
+
+[node name="SpawnMarker" type="Marker2D" groups=["spawn_marker"]]
+position = Vector2(-412, -283)

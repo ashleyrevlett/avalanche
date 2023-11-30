@@ -21,7 +21,6 @@ func _on_sound_button_button_up():
 
 
 func _on_sound_button_start_button_up():
-	print("SOUND PRESSED")
 	if playing:
 		stop()
 		%SoundButtonStart.text = "Sound: Off"
